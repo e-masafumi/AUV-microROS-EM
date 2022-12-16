@@ -9,7 +9,8 @@
 class BNO055 : public pico_i2c{
 	public:
 		int setup(i2c_inst_t *i2cPort);
-		int readTempPress(i2c_inst_t *i2CPort, double *temp, double *press);
+		int setMode(i2c_inst_t *i2cPort);
+		int readAccel(i2c_inst_t *i2CPort, double *temp, double *press);
 };
 
 #endif
