@@ -9,11 +9,13 @@
 #include "func-pwm.h"
 #include "func-i2c.h"
 #include "func-MS5837-02BA.h"
+#include "func-BNO055.h"
 
 const uint LED_PIN = 25;
 pico_pwm pwm;
 pico_i2c i2c;
 MS5837_02BA MS5837;
+BNO055 BNO055;
 
 
 	bool reserved_addr(uint8_t addr){
@@ -82,6 +84,7 @@ int main(){
 	printf("0x%x\n", data);
 
 	MS5837.setup(i2c1);
+	BNO055.setup(i2c1);
 	
 
 	

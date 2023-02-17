@@ -2212,6 +2212,7 @@ CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common
 CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h
 CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h
 CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: ../AUV-BBM.cpp
+CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: ../func-BNO055.h
 CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: ../func-MS5837-02BA.h
 CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: ../func-i2c.h
 CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj: ../func-pwm.h

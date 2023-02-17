@@ -2213,6 +2213,7 @@ CMakeFiles/AUV-BBM.dir/AUV-BBM.cpp.obj
  /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h
  /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h
  /home/raven/pico/works/AUV-BBM/AUV-BBM.cpp
+ /home/raven/pico/works/AUV-BBM/func-BNO055.h
  /home/raven/pico/works/AUV-BBM/func-MS5837-02BA.h
  /home/raven/pico/works/AUV-BBM/func-i2c.h
  /home/raven/pico/works/AUV-BBM/func-pwm.h
