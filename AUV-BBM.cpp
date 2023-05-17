@@ -29,12 +29,16 @@ int main(){
 	uint8_t data=0;
 	double outTemp=0.0;
 	double outPress=0.0;
+	double xAccel=0.0;
+	double yAccel=0.0;
+	double zAccel=0.0;
 	int i=0;
 
+	sleep_ms(5000);
 
 	stdio_init_all();
 	pwm.setup();
-	i2c.setup(i2c1, 100*1000);
+	i2c.setup(i2c1, 400*1000);
 	gpio_set_function(26, GPIO_FUNC_I2C);
 	gpio_set_function(27, GPIO_FUNC_I2C);
 	gpio_pull_up(26);
@@ -87,13 +91,16 @@ int main(){
 	BNO055.setup(i2c1);
 	
 
-	
 	printf("TestDone\n");
 
 	while(1) {
 		MS5837.readTempPress(i2c1, &outTemp, &outPress);
+		BNO055.readAccel(i2c1, &xAccel, &yAccel, &zAccel);
 		printf("Temp = %f [C]\n", outTemp);
-		printf("Press = %f [mbar]\n\n", outPress);
+		printf("Press = %f [mbar]\n", outPress);
+		printf("X Accel = %f \n", xAccel);
+		printf("Y Accel = %f \n", yAccel);
+		printf("Z Accel = %f \n\n", zAccel);
 		gpio_put(LED_PIN, 0);
 		sleep_ms(1000);
 		gpio_put(LED_PIN, 1);

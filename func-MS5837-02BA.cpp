@@ -31,7 +31,7 @@ pico_i2c i2c_MS5837;
 
 int MS5837_02BA::setup(i2c_inst_t *i2cPort){
 	uint8_t cBuff[2]={0};
-	i2c_MS5837.write(i2cPort, MS5837_ADDR, MS5837_RESET, 1); //MS5837-02BA
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_RESET, 1); //MS5837-02BA
 	sleep_ms(100);
 	for(uint8_t i=0; i<7; i++){
 		i2c_MS5837.read(i2cPort, MS5837_ADDR, MS5837_PROM_READ+i*2, cBuff, 2);
@@ -51,14 +51,14 @@ int MS5837_02BA::readTempPress(i2c_inst_t *i2cPort, double *temp, double *press)
 	int64_t off=0, sens=0, off2=0, sens2=0, sensi=0, offi=0;
 	
 
-	i2c_MS5837.write(i2cPort, MS5837_ADDR, MS5837_CONVERT_D1_8192, 1); 
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D1_8192, 1); 
 	sleep_ms(100);
 
 	i2c_MS5837.read(i2cPort, MS5837_ADDR, MS5837_ADC_READ, adcRead, 3);
 	d1Data = (adcRead[0]<<16 | (adcRead[1]<<8) | (adcRead[2]));
 //	printf("%d\n",d1Data);
 
-	i2c_MS5837.write(i2cPort, MS5837_ADDR, MS5837_CONVERT_D2_8192, 1); 
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D2_8192, 1); 
 	sleep_ms(100);
 	i2c_MS5837.read(i2cPort, MS5837_ADDR, MS5837_ADC_READ, adcRead, 3);
 	d2Data = (adcRead[0]<<16 | (adcRead[1]<<8) | (adcRead[2]));

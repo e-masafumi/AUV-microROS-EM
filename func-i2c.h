@@ -9,7 +9,9 @@
 class pico_i2c{
 	public:
 		int setup(i2c_inst_t *i2cPort, uint i2cBaudrate);
-		int write(i2c_inst_t *i2cPort, uint8_t address, uint8_t data, size_t len);
+		int writeDirect(i2c_inst_t *i2cPort, uint8_t address, uint8_t data, size_t len);
+		int writeOneByte(i2c_inst_t *i2cPort, uint8_t devAddress, uint8_t regAddress, uint8_t data);
+		int writeMultiByte(i2c_inst_t *i2cPort, uint8_t devAddress, uint8_t regAddress, uint8_t data[], size_t len);
 		int read(i2c_inst_t *i2cPort, uint8_t devAddress, uint8_t regAddress, uint8_t *data, size_t len);
 };
 

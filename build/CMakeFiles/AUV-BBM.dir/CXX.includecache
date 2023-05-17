@@ -215,6 +215,8 @@ pico/stdio.h
 /home/raven/pico/works/AUV-BBM/func-BNO055.cpp
 stdio.h
 -
+math.h
+-
 pico/stdlib.h
 /home/raven/pico/works/AUV-BBM/pico/stdlib.h
 hardware/i2c.h
