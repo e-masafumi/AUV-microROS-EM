@@ -60,15 +60,18 @@ int BNO055::readAccel(i2c_inst_t *i2cPort, double *x, double *y, double *z){
 	uint8_t buff[6]={0,0,0,0,0,0};
 	int16_t xBin, yBin, zBin;
 
-	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_X_LSB_ADDR, &buff[0], 1);
+/*	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_X_LSB_ADDR, &buff[0], 1);
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_X_MSB_ADDR, &buff[1], 1);
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_Y_LSB_ADDR, &buff[2], 1);
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_Y_MSB_ADDR, &buff[3], 1);
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_Z_LSB_ADDR, &buff[4], 1);
-	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_Z_MSB_ADDR, &buff[5], 1);
-	xBin = buff[0] << 8 | buff[1];
-	yBin = buff[2] << 8 | buff[3];
-	zBin = buff[4] << 8 | buff[5];
+	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_Z_MSB_ADDR, &buff[5], 1);*/
+	for(int i=0;i<=5;i++){
+		i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_ACCEL_DATA_X_LSB_ADDR+(0x01*i), &buff[i], 1);
+	}
+	xBin = buff[0] | buff[1] << 8;
+	yBin = buff[2] | buff[3] << 8;
+	zBin = buff[4] | buff[5] << 8;
 
 	*x = (double)xBin/100;
 	*y = (double)yBin/100;

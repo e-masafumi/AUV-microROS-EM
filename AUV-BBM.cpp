@@ -101,6 +101,7 @@ int main(){
 		printf("X Accel = %f \n", xAccel);
 		printf("Y Accel = %f \n", yAccel);
 		printf("Z Accel = %f \n\n", zAccel);
+		printf("|G| = %f \n\n", sqrt(pow(xAccel,2)+pow(yAccel,2)+pow(zAccel,2)));
 		gpio_put(LED_PIN, 0);
 		sleep_ms(1000);
 		gpio_put(LED_PIN, 1);
