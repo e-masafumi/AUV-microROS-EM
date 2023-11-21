@@ -247,6 +247,7 @@ pico/stdio.h
 /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/pico/stdio.h
 
 /home/raven/pico/works/AUV-BBM/AUV-BBM.cpp
+<<<<<<< HEAD
 bits/stdc++.h
 -
 pico/stdlib.h
@@ -267,6 +268,35 @@ func-BNO055.h
 /home/raven/pico/works/AUV-BBM/func-BNO055.h
 
 /home/raven/pico/works/AUV-BBM/func-BNO055.h
+=======
+>>>>>>> 8fda58f9448efb7c03dd054052cf515e79f30d8e
+stdio.h
+-
+pico/stdlib.h
+/home/raven/pico/works/AUV-BBM/pico/stdlib.h
+<<<<<<< HEAD
+hardware/i2c.h
+/home/raven/pico/works/AUV-BBM/hardware/i2c.h
+func-i2c.h
+/home/raven/pico/works/AUV-BBM/func-i2c.h
+=======
+hardware/gpio.h
+/home/raven/pico/works/AUV-BBM/hardware/gpio.h
+hardware/pwm.h
+/home/raven/pico/works/AUV-BBM/hardware/pwm.h
+pico/binary_info.h
+/home/raven/pico/works/AUV-BBM/pico/binary_info.h
+func-pwm.h
+/home/raven/pico/works/AUV-BBM/func-pwm.h
+func-i2c.h
+/home/raven/pico/works/AUV-BBM/func-i2c.h
+func-MS5837-02BA.h
+/home/raven/pico/works/AUV-BBM/func-MS5837-02BA.h
+func-BNO055.h
+/home/raven/pico/works/AUV-BBM/func-BNO055.h
+>>>>>>> 8fda58f9448efb7c03dd054052cf515e79f30d8e
+
+/home/raven/pico/works/AUV-BBM/func-MS5837-02BA.h
 stdio.h
 -
 pico/stdlib.h

@@ -111,6 +111,7 @@ int main(){
 		printf("+++++OutPut Start+++++\n");
 		printf("Temp = %f [C]\n", outTemp);
 		printf("Press = %f [mbar]\n", outPress);
+<<<<<<< HEAD
 		printf("\n");
 		printf("X Accel = %f m/s^2\n", xAccel);
 		printf("Y Accel = %f m/s^2\n", yAccel);
@@ -124,6 +125,12 @@ int main(){
 		printf("Azimuth = %f deg\n\n", atan2(yMag, xMag)*180/M_PI);
 		printf("+++++OutPut End+++++\n");
 		printf("\n");
+=======
+		printf("X Accel = %f \n", xAccel);
+		printf("Y Accel = %f \n", yAccel);
+		printf("Z Accel = %f \n\n", zAccel);
+		printf("|G| = %f \n\n", sqrt(pow(xAccel,2)+pow(yAccel,2)+pow(zAccel,2)));
+>>>>>>> 8fda58f9448efb7c03dd054052cf515e79f30d8e
 		gpio_put(LED_PIN, 0);
 		sleep_ms(1000);
 		gpio_put(LED_PIN, 1);
