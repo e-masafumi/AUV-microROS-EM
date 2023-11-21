@@ -38,6 +38,7 @@ int main(){
 	double zMag=0.0;
 	double pSurface=0.0;
 	double tempSurface=0.0;
+	double turgetDepth=0.0;
 	int i=0;
 
 	sleep_ms(5000);
