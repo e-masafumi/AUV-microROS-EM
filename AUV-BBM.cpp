@@ -1,5 +1,6 @@
-#include <stdio.h>
-#include <math.h>
+//#include <stdio.h>
+//#include <math.h>
+#include <bits/stdc++.h>
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 //#include "hardware/uart.h"
@@ -32,6 +33,11 @@ int main(){
 	double xAccel=0.0;
 	double yAccel=0.0;
 	double zAccel=0.0;
+	double xMag=0.0;
+	double yMag=0.0;
+	double zMag=0.0;
+	double pSurface=0.0;
+	double tempSurface=0.0;
 	int i=0;
 
 	sleep_ms(5000);
@@ -93,19 +99,36 @@ int main(){
 
 	printf("TestDone\n");
 
+	MS5837.readTempPress(i2c1, &tempSurface, &pSurface);
+	printf("SurfaceTemp = %f [C]\n", tempSurface);
+	printf("SurfacePress = %f [mbar]\n", pSurface);
+	
 	while(1) {
 		MS5837.readTempPress(i2c1, &outTemp, &outPress);
 		BNO055.readAccel(i2c1, &xAccel, &yAccel, &zAccel);
+		BNO055.readMag(i2c1, &xMag, &yMag, &zMag);
+		
+		printf("+++++OutPut Start+++++\n");
 		printf("Temp = %f [C]\n", outTemp);
 		printf("Press = %f [mbar]\n", outPress);
-		printf("X Accel = %f \n", xAccel);
-		printf("Y Accel = %f \n", yAccel);
-		printf("Z Accel = %f \n\n", zAccel);
+		printf("\n");
+		printf("X Accel = %f m/s^2\n", xAccel);
+		printf("Y Accel = %f m/s^2\n", yAccel);
+		printf("Z Accel = %f m/s^2\n\n", zAccel);
+		printf("|G| = %f \n\n", sqrt(pow(xAccel,2)+pow(yAccel,2)+pow(zAccel,2)));
+		printf("\n");
+		printf("X Mag = %f uT\n", xMag);
+		printf("Y Mag = %f uT\n", yMag);
+		printf("Z Mag = %f uT\n\n", zMag);
+		printf("|T| = %f uT\n\n", sqrt(pow(xMag,2)+pow(yMag,2)+pow(zMag,2)));
+		printf("Azimuth = %f deg\n\n", atan2(yMag, xMag)*180/M_PI);
+		printf("+++++OutPut End+++++\n");
+		printf("\n");
 		gpio_put(LED_PIN, 0);
 		sleep_ms(1000);
 		gpio_put(LED_PIN, 1);
 //		puts("Hello World\n");
-		sleep_ms(1000);
+		sleep_ms(500);
 		pwm.duty(0, (0.75+i*0.01));
 		if(i >= 15){
 			i=i;

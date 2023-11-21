@@ -11,6 +11,8 @@ class BNO055 : public pico_i2c{
 		int setup(i2c_inst_t *i2cPort);
 		int setMode(i2c_inst_t *i2cPort);
 		int readAccel(i2c_inst_t *i2cPort, double *x, double *y, double *z);
+		int readMag(i2c_inst_t *i2cPort, double *x, double *y, double *z);
+		int readGyro(i2c_inst_t *i2cPort, double *x, double *y, double *z);
 		int readQuaternion(i2c_inst_t *i2cPort, double *qw, double *qx, double *qy, double *qz);
 };
 
