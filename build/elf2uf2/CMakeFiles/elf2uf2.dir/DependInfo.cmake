@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/raven/pico/pico-sdk/tools/elf2uf2/main.cpp" "/home/raven/pico/works/AUV-BBM/build/elf2uf2/CMakeFiles/elf2uf2.dir/main.cpp.o"
+  "/home/raven/pico/pico-sdk/tools/elf2uf2/main.cpp" "/home/raven/pico/works/AUV-EM/build/elf2uf2/CMakeFiles/elf2uf2.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

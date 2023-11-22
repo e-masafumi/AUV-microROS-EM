@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/raven/pico/works/AUV-BBM
+CMAKE_SOURCE_DIR = /home/raven/pico/works/AUV-EM
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/raven/pico/works/AUV-BBM/build
+CMAKE_BINARY_DIR = /home/raven/pico/works/AUV-EM/build
 
 # Utility rule file for bs2_default_bin.
 
@@ -57,8 +57,8 @@ pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin: pico-sdk/src/rp2
 
 
 pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin: pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/raven/pico/works/AUV-BBM/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating bs2_default.bin"
-	cd /home/raven/pico/works/AUV-BBM/build/pico-sdk/src/rp2_common/boot_stage2 && /usr/bin/arm-none-eabi-objcopy -Obinary /home/raven/pico/works/AUV-BBM/build/pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf /home/raven/pico/works/AUV-BBM/build/pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/raven/pico/works/AUV-EM/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating bs2_default.bin"
+	cd /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2_common/boot_stage2 && /usr/bin/arm-none-eabi-objcopy -Obinary /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
 
 bs2_default_bin: pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin
 bs2_default_bin: pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
@@ -72,10 +72,10 @@ pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/build: bs2_de
 .PHONY : pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/build
 
 pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/clean:
-	cd /home/raven/pico/works/AUV-BBM/build/pico-sdk/src/rp2_common/boot_stage2 && $(CMAKE_COMMAND) -P CMakeFiles/bs2_default_bin.dir/cmake_clean.cmake
+	cd /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2_common/boot_stage2 && $(CMAKE_COMMAND) -P CMakeFiles/bs2_default_bin.dir/cmake_clean.cmake
 .PHONY : pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/clean
 
 pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/depend:
-	cd /home/raven/pico/works/AUV-BBM/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/works/AUV-BBM /home/raven/pico/pico-sdk/src/rp2_common/boot_stage2 /home/raven/pico/works/AUV-BBM/build /home/raven/pico/works/AUV-BBM/build/pico-sdk/src/rp2_common/boot_stage2 /home/raven/pico/works/AUV-BBM/build/pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/raven/pico/works/AUV-EM/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/works/AUV-EM /home/raven/pico/pico-sdk/src/rp2_common/boot_stage2 /home/raven/pico/works/AUV-EM/build /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2_common/boot_stage2 /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_bin.dir/depend
 
