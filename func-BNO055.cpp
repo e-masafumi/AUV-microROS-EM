@@ -55,9 +55,11 @@ int BNO055::setup(i2c_inst_t *i2cPort){
 	}
 	else if(idCheckCnt >= 10){
 		printf("ID Check NG\n");
+		sleep_ms(10000);
 	}
 	else{
 		printf("ID Check ERROR\n");
+		sleep_ms(10000);
 	}
 	printf("\n");
 

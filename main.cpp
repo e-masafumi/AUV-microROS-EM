@@ -13,6 +13,8 @@
 #include "func-BNO055.h"
 
 const uint LED_PIN = 25;
+const uint I2C1_SDA_PIN = 14;
+const uint I2C1_SCL_PIN = 15;
 pico_pwm pwm;
 pico_i2c i2c;
 MS5837_02BA MS5837;
@@ -46,14 +48,14 @@ int main(){
 	stdio_init_all();
 	pwm.setup();
 	i2c.setup(i2c1, 400*1000);
-	gpio_set_function(26, GPIO_FUNC_I2C);
-	gpio_set_function(27, GPIO_FUNC_I2C);
-	gpio_pull_up(26);
-  gpio_pull_up(27);
-	bi_decl(bi_2pins_with_func(26, 27, GPIO_FUNC_I2C));
+	gpio_set_function(I2C1_SDA_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
+	gpio_set_function(I2C1_SCL_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
+	gpio_pull_up(I2C1_SDA_PIN);
+  gpio_pull_up(I2C1_SCL_PIN);
+	bi_decl(bi_2pins_with_func(I2C1_SDA_PIN, I2C1_SCL_PIN, GPIO_FUNC_I2C));
 
-	sleep_ms(1000);
-  printf("\nI2C Bus Scan. SDA=GP%d SCL=GP%d\n", 26, 27);
+	sleep_ms(5000);
+  printf("\nI2C Bus Scan. SDA=GP%d SCL=GP%d\n", I2C1_SDA_PIN, I2C1_SCL_PIN);
   printf("   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n");
 
   for (int addr = 0; addr < (1 << 7); ++addr) {

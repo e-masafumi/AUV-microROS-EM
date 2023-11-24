@@ -238,10 +238,6 @@ sys/cdefs.h
 pico/types.h
 /home/raven/pico/pico-sdk/src/rp2_common/pico_platform/include/pico/pico/types.h
 
-/home/raven/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp
-cstdlib
--
-
 /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h
 pico.h
 /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/pico.h
@@ -250,24 +246,6 @@ pico.h
 pico/stdio.h
 /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/pico/stdio.h
 
-/home/raven/pico/works/AUV-EM/Adafruit_BNO055_addressMap.h
-
-/home/raven/pico/works/AUV-EM/func-BNO055.cpp
-stdio.h
--
-math.h
--
-pico/stdlib.h
-/home/raven/pico/works/AUV-EM/pico/stdlib.h
-hardware/i2c.h
-/home/raven/pico/works/AUV-EM/hardware/i2c.h
-Adafruit_BNO055_addressMap.h
-/home/raven/pico/works/AUV-EM/Adafruit_BNO055_addressMap.h
-func-i2c.h
-/home/raven/pico/works/AUV-EM/func-i2c.h
-func-BNO055.h
-/home/raven/pico/works/AUV-EM/func-BNO055.h
-
 /home/raven/pico/works/AUV-EM/func-BNO055.h
 stdio.h
 -
@@ -277,20 +255,6 @@ hardware/i2c.h
 /home/raven/pico/works/AUV-EM/hardware/i2c.h
 func-i2c.h
 /home/raven/pico/works/AUV-EM/func-i2c.h
-
-/home/raven/pico/works/AUV-EM/func-MS5837-02BA.cpp
-stdio.h
--
-math.h
--
-pico/stdlib.h
-/home/raven/pico/works/AUV-EM/pico/stdlib.h
-hardware/i2c.h
-/home/raven/pico/works/AUV-EM/hardware/i2c.h
-func-i2c.h
-/home/raven/pico/works/AUV-EM/func-i2c.h
-func-MS5837-02BA.h
-/home/raven/pico/works/AUV-EM/func-MS5837-02BA.h
 
 /home/raven/pico/works/AUV-EM/func-MS5837-02BA.h
 stdio.h
@@ -302,16 +266,6 @@ hardware/i2c.h
 func-i2c.h
 /home/raven/pico/works/AUV-EM/func-i2c.h
 
-/home/raven/pico/works/AUV-EM/func-i2c.cpp
-stdio.h
--
-pico/stdlib.h
-/home/raven/pico/works/AUV-EM/pico/stdlib.h
-hardware/i2c.h
-/home/raven/pico/works/AUV-EM/hardware/i2c.h
-func-i2c.h
-/home/raven/pico/works/AUV-EM/func-i2c.h
-
 /home/raven/pico/works/AUV-EM/func-i2c.h
 stdio.h
 -
@@ -319,10 +273,6 @@ pico/stdlib.h
 /home/raven/pico/works/AUV-EM/pico/stdlib.h
 hardware/i2c.h
 /home/raven/pico/works/AUV-EM/hardware/i2c.h
-
-/home/raven/pico/works/AUV-EM/func-pwm.cpp
-func-pwm.h
-/home/raven/pico/works/AUV-EM/func-pwm.h
 
 /home/raven/pico/works/AUV-EM/func-pwm.h
 stdio.h
