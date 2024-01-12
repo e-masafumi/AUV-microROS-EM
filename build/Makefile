@@ -2068,6 +2068,33 @@ home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s
 .PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s
 
+hw_config.obj: hw_config.c.obj
+
+.PHONY : hw_config.obj
+
+# target to build an object file
+hw_config.c.obj:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hw_config.c.obj
+.PHONY : hw_config.c.obj
+
+hw_config.i: hw_config.c.i
+
+.PHONY : hw_config.i
+
+# target to preprocess a source file
+hw_config.c.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hw_config.c.i
+.PHONY : hw_config.c.i
+
+hw_config.s: hw_config.c.s
+
+.PHONY : hw_config.s
+
+# target to generate assembly for a file
+hw_config.c.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hw_config.c.s
+.PHONY : hw_config.c.s
+
 lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.obj: lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.c.obj
 
 .PHONY : lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.obj
@@ -2668,6 +2695,9 @@ help:
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.obj"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.i"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.s"
+	@echo "... hw_config.obj"
+	@echo "... hw_config.i"
+	@echo "... hw_config.s"
 	@echo "... lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.obj"
 	@echo "... lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.i"
 	@echo "... lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.s"

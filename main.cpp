@@ -13,6 +13,9 @@
 #include "func-MS5837-02BA.h"
 #include "func-BNO055.h"
 
+#include "sd_card.h"
+#include "ff.h"
+
 const uint LED_PIN = 25;
 const uint I2C1_SDA_PIN = 14;
 const uint I2C1_SCL_PIN = 15;
@@ -43,6 +46,16 @@ int main(){
 	double tempSurface=0.0;
 	double turgetDepth=0.0;
 	int i=0;
+
+	//SD
+	FRESULT fr;
+	FATFS fs;
+	FIL fil;
+	int ret;
+	char buf[100];
+	char filename[] = "test02.txt";
+
+	printf("start");
 
 	sleep_ms(5000);
 
@@ -106,7 +119,82 @@ int main(){
 	MS5837.readTempPress(i2c1, &tempSurface, &pSurface);
 	printf("SurfaceTemp = %f [C]\n", tempSurface);
 	printf("SurfacePress = %f [mbar]\n", pSurface);
-	
+
+
+
+
+
+    // Initialize SD card
+    if (!sd_init_driver()) {
+        printf("ERROR: Could not initialize SD card\r\n");
+        while (true);
+    }
+
+    // Mount drive
+    fr = f_mount(&fs, "0:", 1);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not mount filesystem (%d)\r\n", fr);
+        while (true);
+    }
+
+    // Open file for writing ()
+    fr = f_open(&fil, filename, FA_WRITE | FA_CREATE_ALWAYS);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not open file (%d)\r\n", fr);
+        while (true);
+    }
+
+    // Write something to file
+    ret = f_printf(&fil, "This is another test\r\n");
+    if (ret < 0) {
+        printf("ERROR: Could not write to file (%d)\r\n", ret);
+        f_close(&fil);
+        while (true);
+    }
+    ret = f_printf(&fil, "of writing to an SD card.\r\n");
+    if (ret < 0) {
+        printf("ERROR: Could not write to file (%d)\r\n", ret);
+        f_close(&fil);
+        while (true);
+    }
+
+    // Close file
+    fr = f_close(&fil);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not close file (%d)\r\n", fr);
+        while (true);
+    }
+
+    // Open file for reading
+    fr = f_open(&fil, filename, FA_READ);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not open file (%d)\r\n", fr);
+        while (true);
+    }
+
+    // Print every line in file over serial
+    printf("Reading from file '%s':\r\n", filename);
+    printf("---\r\n");
+    while (f_gets(buf, sizeof(buf), &fil)) {
+        printf(buf);
+    }
+    printf("\r\n---\r\n");
+
+    // Close file
+    fr = f_close(&fil);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not close file (%d)\r\n", fr);
+        while (true);
+    }
+
+    // Unmount drive
+    f_unmount("0:");
+
+
+
+
+
+
 	while(1) {
 		MS5837.readTempPress(i2c1, &outTemp, &outPress);
 		BNO055.readAccel(i2c1, &xAccel, &yAccel, &zAccel);

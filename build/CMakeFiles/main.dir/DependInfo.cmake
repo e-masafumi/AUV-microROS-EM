@@ -183,6 +183,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj"
+  "/home/raven/pico/works/AUV-EM/hw_config.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/hw_config.c.obj"
   "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.c.obj"
   "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffsystem.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffsystem.c.obj"
   "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffunicode.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffunicode.c.obj"

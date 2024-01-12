@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 include(pico_sdk_import.cmake)
 
 project(main C CXX ASM)
-set(CMAKE_C_STNDARD 11)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
@@ -13,6 +13,7 @@ add_executable(main
 	func-i2c.cpp
 	func-MS5837-02BA.cpp
 	func-BNO055.cpp
+	hw_config.c
 )
 
 add_subdirectory(lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI)

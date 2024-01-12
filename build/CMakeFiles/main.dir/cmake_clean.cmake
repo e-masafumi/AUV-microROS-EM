@@ -75,6 +75,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj"
   "CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj"
   "CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj"
+  "CMakeFiles/main.dir/hw_config.c.obj"
   "CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.c.obj"
   "CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffsystem.c.obj"
   "CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffunicode.c.obj"
