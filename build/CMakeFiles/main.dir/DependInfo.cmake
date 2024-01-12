@@ -115,6 +115,12 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
   "/home/raven/pico/pico-sdk/src/common/pico_usb_reset_interface/include"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_pwm/include"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/include"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_spi/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_rtc/include"
   )
 set(CMAKE_DEPENDS_CHECK_C
   "/home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"
@@ -146,11 +152,14 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/raven/pico/pico-sdk/src/common/pico_util/queue.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/common/pico_util/queue.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/i2c.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/i2c.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_rtc/rtc.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_rtc/rtc.c.obj"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj"
@@ -174,6 +183,19 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffsystem.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffsystem.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffunicode.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ffunicode.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/crc.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/crc.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/demo_logging.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/demo_logging.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/sd_card.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/sd_card.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/sd_spi.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/sd_spi.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/spi.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver/spi.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/f_util.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/f_util.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/ff_stdio.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/ff_stdio.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/glue.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/glue.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/my_debug.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/my_debug.c.obj"
+  "/home/raven/pico/works/AUV-EM/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/rtc.c" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/src/rtc.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -272,6 +294,12 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/home/raven/pico/pico-sdk/src/common/pico_usb_reset_interface/include"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_pwm/include"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/include"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_spi/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_rtc/include"
   )
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/raven/pico/works/AUV-EM/func-BNO055.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-BNO055.cpp.obj"
@@ -378,6 +406,12 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/raven/pico/pico-sdk/src/common/pico_usb_reset_interface/include"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_pwm/include"
   "/home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/include"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/sd_driver"
+  "../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_spi/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/include"
+  "/home/raven/pico/pico-sdk/src/rp2_common/hardware_rtc/include"
   )
 
 # Targets to which this target links.

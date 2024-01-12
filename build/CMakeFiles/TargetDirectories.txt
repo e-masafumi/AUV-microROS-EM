@@ -154,3 +154,5 @@
 /home/raven/pico/works/AUV-EM/build/pico-sdk/src/rp2040/hardware_structs/CMakeFiles/edit_cache.dir
 /home/raven/pico/works/AUV-EM/build/pico-sdk/docs/CMakeFiles/rebuild_cache.dir
 /home/raven/pico/works/AUV-EM/build/pico-sdk/docs/CMakeFiles/edit_cache.dir
+/home/raven/pico/works/AUV-EM/build/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/CMakeFiles/rebuild_cache.dir
+/home/raven/pico/works/AUV-EM/build/lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/CMakeFiles/edit_cache.dir

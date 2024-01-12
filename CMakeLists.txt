@@ -13,11 +13,13 @@ add_executable(main
 	func-i2c.cpp
 	func-MS5837-02BA.cpp
 	func-BNO055.cpp
-	  )
+)
+
+add_subdirectory(lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI)
 
 pico_enable_stdio_usb(main 1)
 pico_enable_stdio_uart(main 0)
 
 pico_add_extra_outputs(main)
 
-target_link_libraries(main pico_stdlib hardware_pwm hardware_i2c)  
+target_link_libraries(main pico_stdlib hardware_pwm hardware_i2c FatFs_SPI)  
