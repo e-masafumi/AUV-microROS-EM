@@ -24,10 +24,9 @@ pico_i2c i2c;
 MS5837_02BA MS5837;
 BNO055 BNO055;
 
-
-	bool reserved_addr(uint8_t addr){
+bool reserved_addr(uint8_t addr){
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
-	}
+}
 
 int main(){
 //	bi_decl(bi_program_description("This is a test binary."));
