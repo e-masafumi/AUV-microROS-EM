@@ -6,6 +6,8 @@
 #include "func-MS5837-02BA.h"
 
 const uint8_t MS5837_ADDR = 0x76;
+//const uint8_t MS5837_ADDR_WRITE = 0b11101100;
+//const uint8_t MS5837_ADDR_READ = 0b11101101;
 const uint8_t MS5837_RESET = 0x1E;
 const uint8_t MS5837_ADC_READ = 0x00;
 const uint8_t MS5837_PROM_READ = 0xA0;
@@ -31,18 +33,21 @@ pico_i2c i2c_MS5837;
 
 int MS5837_02BA::setup(i2c_inst_t *i2cPort){
 	uint8_t cBuff[2]={0};
-	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_RESET, 1); //MS5837-02BA
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_RESET, 1); //RESET
 	sleep_ms(100);
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, 0b00011110, 1); //PROM-READ-START
 	for(uint8_t i=0; i<7; i++){
 		i2c_MS5837.read(i2cPort, MS5837_ADDR, MS5837_PROM_READ+i*2, cBuff, 2);
 		c[i] = ((cBuff[0]<<8) | (cBuff[1]));
-//		printf("0x%x, 0x%x, %d\n", 0xa0+i*2, c[i], c[i] );
+		printf("0x%x, 0x%x, %d\n", MS5837_PROM_READ+i*2, c[i], c[i]);
 	}
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D1_8192, 1); 
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D2_8192, 1); 
 	return 0;
 }
 	
 int MS5837_02BA::readTempPress(i2c_inst_t *i2cPort, double *temp, double *press){
-	uint8_t adcRead[3]={0};
+	uint8_t adcRead[3]={111,111,111};
 	uint32_t d1Data = 0;
 	uint32_t d2Data = 0;
 	int32_t dt=0, ti=0;
@@ -51,22 +56,26 @@ int MS5837_02BA::readTempPress(i2c_inst_t *i2cPort, double *temp, double *press)
 	int64_t off=0, sens=0, off2=0, sens2=0, sensi=0, offi=0;
 	
 
-	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D1_8192, 1); 
-	sleep_ms(100);
+//	sleep_ms(100);
 
+	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D1_8192, 1);
+	sleep_ms(20);
 	i2c_MS5837.read(i2cPort, MS5837_ADDR, MS5837_ADC_READ, adcRead, 3);
-	d1Data = (adcRead[0]<<16 | (adcRead[1]<<8) | (adcRead[2]));
+	d1Data = ( (adcRead[0]<<16) | (adcRead[1]<<8) | (adcRead[2]) );
+//	printf("d1Data=0x%x\n",d1Data);
 //	printf("%d\n",d1Data);
 
 	i2c_MS5837.writeDirect(i2cPort, MS5837_ADDR, MS5837_CONVERT_D2_8192, 1); 
-	sleep_ms(100);
+	sleep_ms(20);
 	i2c_MS5837.read(i2cPort, MS5837_ADDR, MS5837_ADC_READ, adcRead, 3);
-	d2Data = (adcRead[0]<<16 | (adcRead[1]<<8) | (adcRead[2]));
+	d2Data = ( (adcRead[0]<<16) | (adcRead[1]<<8) | (adcRead[2]) );
+//	printf("d2Data=0x%x\n",d2Data);
 //	printf("d2Data(Dec) = %d\n",d2Data);
 //	printf("d2Data(Hex) = %x\n",d2Data);
-
+//	printf("READ DONE\n");
 //	dt = d2Data - (c[5] * pow(2,8);
 	dt = d2Data - (c[5]<<8);
+//	printf("dt=%d\n",dt);
 //	tempBuff = 2000.0 + dt * c[6] / pow(2,23);
 	tempBuff = 2000 + int64_t( (dt>>11)*(c[6]>>12) );
 //	printf("dt=%d\n", dt);
@@ -80,7 +89,8 @@ int MS5837_02BA::readTempPress(i2c_inst_t *i2cPort, double *temp, double *press)
   pBuff = (d1Data * sens / pow(2,21) - off ) / pow(2,15);
 //	printf("%d\n",P);
 
-	if (tempBuff <2000.0) {
+	if (tempBuff < 2000.0){
+		printf("LOW TEMP\n");
 		ti = 11 * dt * dt / pow(2,35);
 		offi = 31 * (tempBuff - 2000) * (tempBuff - 2000) / pow(2,3);
 		sensi = 63 * (tempBuff - 2000) * (tempBuff - 2000) / pow(2,5);
@@ -100,7 +110,7 @@ int MS5837_02BA::readTempPress(i2c_inst_t *i2cPort, double *temp, double *press)
 	sens2 = sens - sensi;
 	*temp = (tempBuff - ti) /100.0;
 	*press = (((d1Data * sens2) / pow(2,21) - off2) / pow(2,15)) / 100;
-
+	printf("\n");
 
 //	printf("Temp = %f [C]\n", temp);
 //	printf("Press = %f [mbar]\n", press);

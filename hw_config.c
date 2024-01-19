@@ -48,7 +48,8 @@ static spi_t spis[] = {  // One for each SPI.
         .mosi_gpio = 19,
 //        .sck_gpio = 14,
         .sck_gpio = 18,
-        .baud_rate = 12500 * 1000,  
+//        .baud_rate = 12500 * 1000,  
+        .baud_rate = 115200,  
         //.baud_rate = 25 * 1000 * 1000, // Actual frequency: 20833333. 
     }
 };

@@ -52,7 +52,7 @@ int main(){
 	FIL fil;
 	int ret;
 	char buf[100];
-	char filename[] = "test02.txt";
+	char filename[] = "test.txt";
 
 	printf("start");
 
@@ -63,8 +63,8 @@ int main(){
 	i2c.setup(i2c1, 400*1000);
 	gpio_set_function(I2C1_SDA_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
 	gpio_set_function(I2C1_SCL_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
-	gpio_pull_up(I2C1_SDA_PIN);
-  gpio_pull_up(I2C1_SCL_PIN);
+//	gpio_pull_up(I2C1_SDA_PIN);
+//  gpio_pull_up(I2C1_SCL_PIN);
 	bi_decl(bi_2pins_with_func(I2C1_SDA_PIN, I2C1_SCL_PIN, GPIO_FUNC_I2C));
 
 	sleep_ms(5000);
@@ -98,23 +98,27 @@ int main(){
 	
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
-	sleep_ms(1000);
+	printf("HelloLED!\n");
+	sleep_ms(100);
 
-	i2c.read(i2c1, 0x28, 0x00, &data, 1);
-	printf("0x%x\n", data);
+//	i2c.read(i2c1, 0x28, 0x00, &data, 1);
+//	printf("0x%x\n", data);
 
-	i2c.read(i2c1, 0x28, 0x01, &data, 1);
-	printf("0x%x\n", data);
+//	i2c.read(i2c1, 0x28, 0x01, &data, 1);
+//	printf("0x%x\n", data);
 	
-	i2c.read(i2c1, 0x77, 0x75, &data, 1); //BME680
-	printf("0x%x\n", data);
+//	i2c.read(i2c1, 0x77, 0x75, &data, 1); //BME680
+//	printf("0x%x\n", data);
 
-	MS5837.setup(i2c1);
 	BNO055.setup(i2c1);
+	printf("HelloBNO055!\n");
+	sleep_ms(100);
+	MS5837.setup(i2c1);
+	printf("HelloMS5837!\n");
 	
 
 	printf("TestDone\n");
-
+	sleep_ms(100);
 	MS5837.readTempPress(i2c1, &tempSurface, &pSurface);
 	printf("SurfaceTemp = %f [C]\n", tempSurface);
 	printf("SurfacePress = %f [mbar]\n", pSurface);
@@ -143,20 +147,20 @@ int main(){
         while (true);
     }
 
-    // Write something to file
-    ret = f_printf(&fil, "This is another test\r\n");
+	// Write something to file
+    ret = f_printf(&fil, "Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
     if (ret < 0) {
         printf("ERROR: Could not write to file (%d)\r\n", ret);
         f_close(&fil);
         while (true);
     }
-    ret = f_printf(&fil, "of writing to an SD card.\r\n");
+/*    ret = f_printf(&fil, "of writing to an SD card.\r\n");
     if (ret < 0) {
         printf("ERROR: Could not write to file (%d)\r\n", ret);
         f_close(&fil);
         while (true);
     }
-
+*/
     // Close file
     fr = f_close(&fil);
     if (fr != FR_OK) {
@@ -187,18 +191,38 @@ int main(){
     }
 
     // Unmount drive
-    f_unmount("0:");
+//    f_unmount("0:");
 
 
+    // Open file for writing ()
+    fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not open file (%d)\r\n", fr);
+        while (true);
+    }
 
 
 
 
 	while(1) {
 		MS5837.readTempPress(i2c1, &outTemp, &outPress);
+		sleep_ms(100);
+		printf("%f, %f\n",outTemp, outPress);
 		BNO055.readAccel(i2c1, &xAccel, &yAccel, &zAccel);
 		BNO055.readMag(i2c1, &xMag, &yMag, &zMag);
-		
+
+		// Write something to file
+    ret = f_printf(&fil, "%lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", outTemp, outPress,xAccel,yAccel,zAccel,xMag,yMag,zMag);
+/*    ret = f_printf(&fil, "%lf, %lf, %lf,", xAccel, yAccel, zAccel);
+    ret = f_printf(&fil, "%lf, %lf, %lf", xMag, yMag, zMag);
+    ret = f_printf(&fil, "\r\n");*/
+    if (ret < 0) {
+        printf("ERROR: Could not write to file (%d)\r\n", ret);
+        f_close(&fil);
+        while (true);
+    }
+
+/*	
 		printf("+++++OutPut Start+++++\n");
 		printf("Temp = %f [C]\n", outTemp);
 		printf("Press = %f [mbar]\n", outPress);
@@ -219,14 +243,31 @@ int main(){
 		printf("Y Accel = %f \n", yAccel);
 		printf("Z Accel = %f \n\n", zAccel);
 		printf("|G| = %f \n\n", sqrt(pow(xAccel,2)+pow(yAccel,2)+pow(zAccel,2)));
-		gpio_put(LED_PIN, 0);
-		sleep_ms(1000);
+*/
+//		sleep_ms(1000);
 		gpio_put(LED_PIN, 1);
 //		puts("Hello World\n");
-		sleep_ms(500);
-		pwm.duty(0, (0.75+i*0.01));
-		if(i >= 15){
-			i=i;
+		pwm.duty(0, (0.75+i*0.001));
+		pwm.duty(1, (0.75+i*0.001));
+		if(i >= 150){
+			i=0;
+			gpio_put(LED_PIN, 0);
+//			sleep_ms(1000);
+			printf("PWM RESET\r\n");
+			// Close file
+			fr = f_close(&fil);
+			if (fr != FR_OK) {
+				printf("ERROR: Could not close file (%d)\r\n", fr);
+        while (true);
+			}
+			// Open file for writing ()
+			fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
+			if (fr != FR_OK) {
+        printf("ERROR: Could not open file (%d)\r\n", fr);
+        while (true);
+			}
+			//Move to end
+			ret = f_lseek(&fil, f_size(&fil));
 		}
 		else{
 			i++;
