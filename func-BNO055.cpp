@@ -67,24 +67,24 @@ int BNO055::setup(i2c_inst_t *i2cPort){
 	printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 	i2c_BNO055.writeOneByte(i2cPort, BNO055_ADDRESS_A, BNO055_PWR_MODE_ADDR, POWER_MODE_NORMAL);
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_PWR_MODE_ADDR, &readBuff, 1);
-	printf("BNO055_PWR_MODE_ADDR = 0x%x\n", readBuff);
+	printf("BNO055_PWR_MODE_ADDR = 0x%b\n", readBuff);
 	
 	i2c_BNO055.writeOneByte(i2cPort, BNO055_ADDRESS_A, BNO055_OPR_MODE_ADDR, OPERATION_MODE_CONFIG);
 	sleep_ms(20); //min. 19ms
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_OPR_MODE_ADDR, &readBuff, 1);
-	printf("BNO055_OPR_MODE_ADDR = 0x%x\n", readBuff);
+	printf("BNO055_OPR_MODE_ADDR = 0x%b BEFORE INIT\n", readBuff);
 
 	i2c_BNO055.writeOneByte(i2cPort, BNO055_ADDRESS_A, BNO055_OPR_MODE_ADDR, OPERATION_MODE_NDOF);
 	sleep_ms(10); //min. 7ms
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_OPR_MODE_ADDR, &readBuff, 1);
-	printf("BNO055_OPR_MODE_ADDR = 0x%x\n", readBuff);
+	printf("BNO055_OPR_MODE_ADDR = 0x%b AFTER INIT\n", readBuff);
 
 
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, &readBuff, 1);
-	printf("BNO055_UNIT_SEL_ADDR = 0x%b\n", readBuff);
+	printf("BNO055_UNIT_SEL_ADDR = 0x%b BEFORE INIT\n", readBuff);
 	i2c_BNO055.writeOneByte(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, 0b10000000);
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, &readBuff, 1);
-	printf("BNO055_UNIT_SEL_ADDR = 0x%b\n", readBuff);
+	printf("BNO055_UNIT_SEL_ADDR INIT_FIN = 0x%b AFTER INIT\n", readBuff);
 
 	return 0;
 }

@@ -33,6 +33,9 @@ int main(){
 //	bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
 
 	uint8_t data=0;
+	uint32_t timeBuff_32=0;
+	uint64_t timeBuff_64=0;
+
 	double outTemp=0.0;
 	double outPress=0.0;
 	double xAccel=0.0;
@@ -148,7 +151,7 @@ int main(){
     }
 
 	// Write something to file
-    ret = f_printf(&fil, "Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
+    ret = f_printf(&fil, "Time, Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
     if (ret < 0) {
         printf("ERROR: Could not write to file (%d)\r\n", ret);
         f_close(&fil);
@@ -200,19 +203,21 @@ int main(){
         printf("ERROR: Could not open file (%d)\r\n", fr);
         while (true);
     }
-
+    ret = f_printf(&fil, "Time, Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
 
 
 
 	while(1) {
 		MS5837.readTempPress(i2c1, &outTemp, &outPress);
 		sleep_ms(100);
-		printf("%f, %f\n",outTemp, outPress);
 		BNO055.readAccel(i2c1, &xAccel, &yAccel, &zAccel);
 		BNO055.readMag(i2c1, &xMag, &yMag, &zMag);
+		timeBuff_32 = time_us_32();
+		printf("%d, %f, %f\n",timeBuff_32, outTemp, outPress);
 
 		// Write something to file
-    ret = f_printf(&fil, "%lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", outTemp, outPress,xAccel,yAccel,zAccel,xMag,yMag,zMag);
+//    ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", timeBuff_32, outTemp, outPress,xAccel,yAccel,zAccel,xMag,yMag,zMag);
+    ret = f_writef(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", timeBuff_32, outTemp, outPress,xAccel,yAccel,zAccel,xMag,yMag,zMag);
 /*    ret = f_printf(&fil, "%lf, %lf, %lf,", xAccel, yAccel, zAccel);
     ret = f_printf(&fil, "%lf, %lf, %lf", xMag, yMag, zMag);
     ret = f_printf(&fil, "\r\n");*/
@@ -249,7 +254,7 @@ int main(){
 //		puts("Hello World\n");
 		pwm.duty(0, (0.75+i*0.001));
 		pwm.duty(1, (0.75+i*0.001));
-		if(i >= 150){
+		if(i >= 10){
 			i=0;
 			gpio_put(LED_PIN, 0);
 //			sleep_ms(1000);
