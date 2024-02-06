@@ -358,6 +358,16 @@ hardware/i2c.h
 func-i2c.h
 /home/raven/pico/works/AUV-EM/func-i2c.h
 
+/home/raven/pico/works/AUV-EM/func-INA228.h
+stdio.h
+-
+pico/stdlib.h
+/home/raven/pico/works/AUV-EM/pico/stdlib.h
+hardware/i2c.h
+/home/raven/pico/works/AUV-EM/hardware/i2c.h
+func-i2c.h
+/home/raven/pico/works/AUV-EM/func-i2c.h
+
 /home/raven/pico/works/AUV-EM/func-MS5837-02BA.h
 stdio.h
 -
@@ -391,6 +401,8 @@ pico/stdlib.h
 /home/raven/pico/works/AUV-EM/pico/stdlib.h
 hardware/gpio.h
 /home/raven/pico/works/AUV-EM/hardware/gpio.h
+hardware/uart.h
+/home/raven/pico/works/AUV-EM/hardware/uart.h
 hardware/pwm.h
 /home/raven/pico/works/AUV-EM/hardware/pwm.h
 pico/binary_info.h
@@ -403,6 +415,8 @@ func-MS5837-02BA.h
 /home/raven/pico/works/AUV-EM/func-MS5837-02BA.h
 func-BNO055.h
 /home/raven/pico/works/AUV-EM/func-BNO055.h
+func-INA228.h
+/home/raven/pico/works/AUV-EM/func-INA228.h
 sd_card.h
 /home/raven/pico/works/AUV-EM/sd_card.h
 ff.h

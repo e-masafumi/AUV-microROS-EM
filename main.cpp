@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
-//#include "hardware/uart.h"
+#include "hardware/uart.h"
 #include "hardware/pwm.h"
 #include "pico/binary_info.h"
 
@@ -12,19 +12,29 @@
 #include "func-i2c.h"
 #include "func-MS5837-02BA.h"
 #include "func-BNO055.h"
+#include "func-INA228.h"
 
 #include "sd_card.h"
 #include "ff.h"
 
 const uint LED_PIN = 25;
+const uint I2C0_SDA_PIN = 8;
+const uint I2C0_SCL_PIN = 9;
 const uint I2C1_SDA_PIN = 14;
 const uint I2C1_SCL_PIN = 15;
+const uint UART0_TX_PIN = 0; 
+const uint UART0_RX_PIN = 1;
+const uint UART0_BAUDRATE = 9600;
+const uint UART1_TX_PIN = 4;
+const uint UART1_RX_PIN = 5;
+const uint UART1_BAUDRATE = 9600;
 volatile bool exeFlag = false;
 struct repeating_timer st_timer;
 pico_pwm pwm;
 pico_i2c i2c;
 MS5837_02BA MS5837;
 BNO055 BNO055;
+INA228 INA228;
 
 bool reserved_addr(uint8_t addr){
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
@@ -82,7 +92,8 @@ int main(){
 	FIL fil;
 	int ret;
 	char buf[100];
-	char filename[] = "test.txt";
+//	char filename[] = "log.dat";
+	char filename[] = "log.txt";
 
 	printf("start");
 
@@ -90,11 +101,21 @@ int main(){
 
 	stdio_init_all();
 	pwm.setup();
+	uart_init(uart0, UART0_BAUDRATE);
+	uart_init(uart1, UART1_BAUDRATE);
+	gpio_set_function(UART0_TX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
+	gpio_set_function(UART0_RX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
+	gpio_set_function(UART1_TX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
+	gpio_set_function(UART1_RX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
+	i2c.setup(i2c0, 400*1000);
 	i2c.setup(i2c1, 400*1000);
+	gpio_set_function(I2C0_SDA_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
+	gpio_set_function(I2C0_SCL_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
 	gpio_set_function(I2C1_SDA_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
 	gpio_set_function(I2C1_SCL_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
 //	gpio_pull_up(I2C1_SDA_PIN);
 //  gpio_pull_up(I2C1_SCL_PIN);
+	bi_decl(bi_2pins_with_func(I2C0_SDA_PIN, I2C0_SCL_PIN, GPIO_FUNC_I2C));
 	bi_decl(bi_2pins_with_func(I2C1_SDA_PIN, I2C1_SCL_PIN, GPIO_FUNC_I2C));
 
 	sleep_ms(5000);
@@ -145,10 +166,19 @@ int main(){
 	sleep_ms(100);
 	MS5837.setup(i2c1);
 	printf("HelloMS5837!\n");
+	sleep_ms(100);
+	printf("OK!\n");
+	INA228.setup(i2c0);
+	printf("HelloINA238!\n");
+	sleep_ms(100);
 	
 
 	printf("TestDone\n");
 	sleep_ms(100);
+
+	printf("uint32_t: %lu\n", sizeof(logData.timeBuff_32));
+	printf("double: %lu\n", sizeof(logData.outTemp));
+	printf("logData: %lu\n", sizeof(logData));
 	MS5837.readTempPress(i2c1, &tempSurface, &pSurface);
 	printf("SurfaceTemp = %f [C]\n", tempSurface);
 	printf("SurfacePress = %f [mbar]\n", pSurface);
@@ -250,17 +280,18 @@ int main(){
 		printf("%d, %f, %f\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 
 		// Write something to file
-//    ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", timeBuff_32, outTemp, outPress,xAccel,yAccel,zAccel,xMag,yMag,zMag);
+    ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_32, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
 //		writeBuff[] = {timeBuff_32, outTemp, outPress, xAccel, yAccel, zAccel, xMag, yMag, zMag};
 //		writeSize=sizeof(writeBuff);
-		size_t writeSize=sizeof(logData);
+/*		size_t writeSize=sizeof(logData);
 		unsigned int writtenSize=0;
     ret = f_write(&fil, &logData, int(writeSize), &writtenSize);
 		if(writeSize != writtenSize){
 			printf("DISK FULL");
 		}
 		else{
-		}	
+		}
+*/	
 /*    ret = f_printf(&fil, "%lf, %lf, %lf,", xAccel, yAccel, zAccel);
     ret = f_printf(&fil, "%lf, %lf, %lf", xMag, yMag, zMag);
     ret = f_printf(&fil, "\r\n");*/

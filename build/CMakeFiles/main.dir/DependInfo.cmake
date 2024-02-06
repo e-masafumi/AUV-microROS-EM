@@ -304,6 +304,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   )
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/raven/pico/works/AUV-EM/func-BNO055.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-BNO055.cpp.obj"
+  "/home/raven/pico/works/AUV-EM/func-INA228.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-INA228.cpp.obj"
   "/home/raven/pico/works/AUV-EM/func-MS5837-02BA.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-MS5837-02BA.cpp.obj"
   "/home/raven/pico/works/AUV-EM/func-i2c.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-i2c.cpp.obj"
   "/home/raven/pico/works/AUV-EM/func-pwm.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-pwm.cpp.obj"

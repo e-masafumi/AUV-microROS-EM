@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/func-BNO055.cpp.obj"
+  "CMakeFiles/main.dir/func-INA228.cpp.obj"
   "CMakeFiles/main.dir/func-MS5837-02BA.cpp.obj"
   "CMakeFiles/main.dir/func-i2c.cpp.obj"
   "CMakeFiles/main.dir/func-pwm.cpp.obj"

@@ -241,6 +241,33 @@ func-BNO055.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-BNO055.cpp.s
 .PHONY : func-BNO055.cpp.s
 
+func-INA228.obj: func-INA228.cpp.obj
+
+.PHONY : func-INA228.obj
+
+# target to build an object file
+func-INA228.cpp.obj:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-INA228.cpp.obj
+.PHONY : func-INA228.cpp.obj
+
+func-INA228.i: func-INA228.cpp.i
+
+.PHONY : func-INA228.i
+
+# target to preprocess a source file
+func-INA228.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-INA228.cpp.i
+.PHONY : func-INA228.cpp.i
+
+func-INA228.s: func-INA228.cpp.s
+
+.PHONY : func-INA228.s
+
+# target to generate assembly for a file
+func-INA228.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-INA228.cpp.s
+.PHONY : func-INA228.cpp.s
+
 func-MS5837-02BA.obj: func-MS5837-02BA.cpp.obj
 
 .PHONY : func-MS5837-02BA.obj
@@ -2492,6 +2519,9 @@ help:
 	@echo "... func-BNO055.obj"
 	@echo "... func-BNO055.i"
 	@echo "... func-BNO055.s"
+	@echo "... func-INA228.obj"
+	@echo "... func-INA228.i"
+	@echo "... func-INA228.s"
 	@echo "... func-MS5837-02BA.obj"
 	@echo "... func-MS5837-02BA.i"
 	@echo "... func-MS5837-02BA.s"

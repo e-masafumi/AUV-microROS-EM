@@ -13,6 +13,7 @@ add_executable(main
 	func-i2c.cpp
 	func-MS5837-02BA.cpp
 	func-BNO055.cpp
+	func-INA228.cpp
 	hw_config.c
 )
 
@@ -23,4 +24,4 @@ pico_enable_stdio_uart(main 0)
 
 pico_add_extra_outputs(main)
 
-target_link_libraries(main pico_stdlib hardware_pwm hardware_i2c FatFs_SPI)  
+target_link_libraries(main pico_stdlib hardware_pwm hardware_i2c FatFs_SPI hardware_uart)  
