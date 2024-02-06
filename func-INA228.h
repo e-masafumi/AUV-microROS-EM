@@ -9,6 +9,7 @@
 class INA228: public pico_i2c{
 	public:
 		int setup(i2c_inst_t *i2cPort);
+//		int readCurVolPow(i2c_inst_t *i2cPort, double *current, double *voltage, double *power);
 //		int readTempPress(i2c_inst_t *i2CPort, double *temp, double *press);
 };
 

@@ -10,6 +10,7 @@
 
 #include "func-pwm.h"
 #include "func-i2c.h"
+//#include "func-uart.h"
 #include "func-MS5837-02BA.h"
 #include "func-BNO055.h"
 #include "func-INA228.h"
@@ -22,16 +23,11 @@ const uint I2C0_SDA_PIN = 8;
 const uint I2C0_SCL_PIN = 9;
 const uint I2C1_SDA_PIN = 14;
 const uint I2C1_SCL_PIN = 15;
-const uint UART0_TX_PIN = 0; 
-const uint UART0_RX_PIN = 1;
-const uint UART0_BAUDRATE = 9600;
-const uint UART1_TX_PIN = 4;
-const uint UART1_RX_PIN = 5;
-const uint UART1_BAUDRATE = 9600;
 volatile bool exeFlag = false;
 struct repeating_timer st_timer;
 pico_pwm pwm;
 pico_i2c i2c;
+//pico_uart uart;
 MS5837_02BA MS5837;
 BNO055 BNO055;
 INA228 INA228;
@@ -97,16 +93,15 @@ int main(){
 
 	printf("start");
 
-	sleep_ms(5000);
+	sleep_ms(1000);
 
 	stdio_init_all();
 	pwm.setup();
-	uart_init(uart0, UART0_BAUDRATE);
-	uart_init(uart1, UART1_BAUDRATE);
-	gpio_set_function(UART0_TX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
-	gpio_set_function(UART0_RX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
-	gpio_set_function(UART1_TX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
-	gpio_set_function(UART1_RX_PIN, GPIO_FUNC_UART);	//raspi mother ver1.0
+//	uart.setup(uart0, 9600, 8, 1);
+//	uart.setup(uart1, 9600, 8, 1);
+
+
+
 	i2c.setup(i2c0, 400*1000);
 	i2c.setup(i2c1, 400*1000);
 	gpio_set_function(I2C0_SDA_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
@@ -119,7 +114,7 @@ int main(){
 	bi_decl(bi_2pins_with_func(I2C1_SDA_PIN, I2C1_SCL_PIN, GPIO_FUNC_I2C));
 
 	sleep_ms(5000);
-  printf("\nI2C Bus Scan. SDA=GP%d SCL=GP%d\n", I2C1_SDA_PIN, I2C1_SCL_PIN);
+/*  printf("\nI2C Bus Scan. SDA=GP%d SCL=GP%d\n", I2C1_SDA_PIN, I2C1_SCL_PIN);
   printf("   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n");
 
   for (int addr = 0; addr < (1 << 7); ++addr) {
@@ -142,15 +137,13 @@ int main(){
 
       printf(ret < 0 ? "." : "@");
       printf(addr % 16 == 15 ? "\n" : "  ");
-  }
+  }*/
     printf("Done.\n");
 	
 	printf("HelloUART!\n");
-	
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
 	printf("HelloLED!\n");
-	sleep_ms(100);
 
 //	i2c.read(i2c1, 0x28, 0x00, &data, 1);
 //	printf("0x%x\n", data);
