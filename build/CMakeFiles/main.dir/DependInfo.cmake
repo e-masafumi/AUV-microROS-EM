@@ -308,6 +308,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/raven/pico/works/AUV-EM/func-MS5837-02BA.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-MS5837-02BA.cpp.obj"
   "/home/raven/pico/works/AUV-EM/func-i2c.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-i2c.cpp.obj"
   "/home/raven/pico/works/AUV-EM/func-pwm.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-pwm.cpp.obj"
+  "/home/raven/pico/works/AUV-EM/func-uart.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/func-uart.cpp.obj"
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj"
   "/home/raven/pico/works/AUV-EM/main.cpp" "/home/raven/pico/works/AUV-EM/build/CMakeFiles/main.dir/main.cpp.obj"
   )

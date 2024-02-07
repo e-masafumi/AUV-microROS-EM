@@ -349,6 +349,33 @@ func-pwm.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-pwm.cpp.s
 .PHONY : func-pwm.cpp.s
 
+func-uart.obj: func-uart.cpp.obj
+
+.PHONY : func-uart.obj
+
+# target to build an object file
+func-uart.cpp.obj:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-uart.cpp.obj
+.PHONY : func-uart.cpp.obj
+
+func-uart.i: func-uart.cpp.i
+
+.PHONY : func-uart.i
+
+# target to preprocess a source file
+func-uart.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-uart.cpp.i
+.PHONY : func-uart.cpp.i
+
+func-uart.s: func-uart.cpp.s
+
+.PHONY : func-uart.s
+
+# target to generate assembly for a file
+func-uart.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-uart.cpp.s
+.PHONY : func-uart.cpp.s
+
 home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj: home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj
 
 .PHONY : home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj
@@ -2531,6 +2558,9 @@ help:
 	@echo "... func-pwm.obj"
 	@echo "... func-pwm.i"
 	@echo "... func-pwm.s"
+	@echo "... func-uart.obj"
+	@echo "... func-uart.i"
+	@echo "... func-uart.s"
 	@echo "... home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj"
 	@echo "... home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.i"
 	@echo "... home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.s"

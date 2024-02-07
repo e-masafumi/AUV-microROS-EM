@@ -2775,6 +2775,44 @@ CMakeFiles/main.dir/func-pwm.cpp.obj: ../func-pwm.h
 CMakeFiles/main.dir/func-pwm.cpp.obj: generated/pico_base/pico/config_autogen.h
 CMakeFiles/main.dir/func-pwm.cpp.obj: generated/pico_base/pico/version.h
 
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/boards/include/boards/pico.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_base/include/pico.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_base/include/pico/assert.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_base/include/pico/config.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_base/include/pico/error.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_base/include/pico/types.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_time/include/pico/time.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/platform_defs.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/addressmap.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dreq.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/intctrl.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/io_bank0.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/m0plus.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/pads_bank0.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/sio.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/timer.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/interp.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/iobank0.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/padsbank0.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/sio.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/timer.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_base/include/hardware/address_mapped.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_irq/include/hardware/irq.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_timer/include/hardware/timer.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_uart/include/hardware/uart.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/pico_platform/include/pico/platform.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h
+CMakeFiles/main.dir/func-uart.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h
+CMakeFiles/main.dir/func-uart.cpp.obj: ../func-uart.cpp
+CMakeFiles/main.dir/func-uart.cpp.obj: ../func-uart.h
+CMakeFiles/main.dir/func-uart.cpp.obj: generated/pico_base/pico/config_autogen.h
+CMakeFiles/main.dir/func-uart.cpp.obj: generated/pico_base/pico/version.h
+
 CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp
 
 CMakeFiles/main.dir/main.cpp.obj: ../lib/no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI/ff15/source/ff.h
@@ -2839,6 +2877,7 @@ CMakeFiles/main.dir/main.cpp.obj: ../func-INA228.h
 CMakeFiles/main.dir/main.cpp.obj: ../func-MS5837-02BA.h
 CMakeFiles/main.dir/main.cpp.obj: ../func-i2c.h
 CMakeFiles/main.dir/main.cpp.obj: ../func-pwm.h
+CMakeFiles/main.dir/main.cpp.obj: ../func-uart.h
 CMakeFiles/main.dir/main.cpp.obj: ../main.cpp
 CMakeFiles/main.dir/main.cpp.obj: generated/pico_base/pico/config_autogen.h
 CMakeFiles/main.dir/main.cpp.obj: generated/pico_base/pico/version.h

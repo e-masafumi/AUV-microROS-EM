@@ -11,6 +11,7 @@ add_executable(main
 	main.cpp
 	func-pwm.cpp
 	func-i2c.cpp
+	func-uart.cpp
 	func-MS5837-02BA.cpp
 	func-BNO055.cpp
 	func-INA228.cpp

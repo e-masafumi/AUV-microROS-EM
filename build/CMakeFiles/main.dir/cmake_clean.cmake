@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/func-MS5837-02BA.cpp.obj"
   "CMakeFiles/main.dir/func-i2c.cpp.obj"
   "CMakeFiles/main.dir/func-pwm.cpp.obj"
+  "CMakeFiles/main.dir/func-uart.cpp.obj"
   "CMakeFiles/main.dir/home/raven/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"
   "CMakeFiles/main.dir/home/raven/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj"
   "CMakeFiles/main.dir/home/raven/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj"

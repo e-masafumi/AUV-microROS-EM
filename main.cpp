@@ -10,7 +10,7 @@
 
 #include "func-pwm.h"
 #include "func-i2c.h"
-//#include "func-uart.h"
+#include "func-uart.h"
 #include "func-MS5837-02BA.h"
 #include "func-BNO055.h"
 #include "func-INA228.h"
@@ -27,7 +27,7 @@ volatile bool exeFlag = false;
 struct repeating_timer st_timer;
 pico_pwm pwm;
 pico_i2c i2c;
-//pico_uart uart;
+pico_uart uart;
 MS5837_02BA MS5837;
 BNO055 BNO055;
 INA228 INA228;
@@ -68,6 +68,7 @@ int main(){
 	double tempSurface=0.0;
 	double turgetDepth=0.0;
 	int i=0;
+	int actualBaudrate[2]={12000,12000};
 
 	struct sensorsData{
 		uint32_t timeBuff_32=0;
@@ -91,16 +92,12 @@ int main(){
 //	char filename[] = "log.dat";
 	char filename[] = "log.txt";
 
+
 	printf("start");
-
-	sleep_ms(1000);
-
 	stdio_init_all();
 	pwm.setup();
-//	uart.setup(uart0, 9600, 8, 1);
-//	uart.setup(uart1, 9600, 8, 1);
-
-
+	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
+//	actualBaudrate[1] = uart.setup(uart1, 9600, 8, 1);
 
 	i2c.setup(i2c0, 400*1000);
 	i2c.setup(i2c1, 400*1000);
@@ -108,12 +105,14 @@ int main(){
 	gpio_set_function(I2C0_SCL_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
 	gpio_set_function(I2C1_SDA_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
 	gpio_set_function(I2C1_SCL_PIN, GPIO_FUNC_I2C);	//raspi mother ver1.0
-//	gpio_pull_up(I2C1_SDA_PIN);
-//  gpio_pull_up(I2C1_SCL_PIN);
+	gpio_pull_up(I2C0_SDA_PIN);
+	gpio_pull_up(I2C0_SCL_PIN);
+	gpio_pull_up(I2C1_SDA_PIN);
+	gpio_pull_up(I2C1_SCL_PIN);
 	bi_decl(bi_2pins_with_func(I2C0_SDA_PIN, I2C0_SCL_PIN, GPIO_FUNC_I2C));
 	bi_decl(bi_2pins_with_func(I2C1_SDA_PIN, I2C1_SCL_PIN, GPIO_FUNC_I2C));
 
-	sleep_ms(5000);
+	sleep_ms(500);
 /*  printf("\nI2C Bus Scan. SDA=GP%d SCL=GP%d\n", I2C1_SDA_PIN, I2C1_SCL_PIN);
   printf("   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n");
 
@@ -138,13 +137,14 @@ int main(){
       printf(ret < 0 ? "." : "@");
       printf(addr % 16 == 15 ? "\n" : "  ");
   }*/
-    printf("Done.\n");
+  printf("Done.\n");
 	
-	printf("HelloUART!\n");
+	printf("UART actual baudrate, 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate
+[1]);
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
 	printf("HelloLED!\n");
-
+	sleep_ms(500);
 //	i2c.read(i2c1, 0x28, 0x00, &data, 1);
 //	printf("0x%x\n", data);
 
