@@ -2,11 +2,15 @@
 //#include <math.h>
 //
 #include <bits/stdc++.h>
+#include <string>
+#include <vector>
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
 #include "hardware/gpio.h"
 #include "hardware/uart.h"
 #include "hardware/pwm.h"
 #include "pico/binary_info.h"
+#include "extern.h"
 
 #include "func-pwm.h"
 #include "func-i2c.h"
@@ -48,6 +52,20 @@ bool repeating_timer_callback(struct repeating_timer *t) {
 	return true;
 }
 
+void core1_main(void){
+	int actualBaudrate[2]={12000,12000};
+	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
+	sleep_ms(3000);
+	printf("UART actual baudrate, 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
+	while(1){
+//		printf("Core 1, UART0 is mine, %dbps", actualBaudrate[0]);
+//		sleep_ms(1000);
+		printf("%s\n\n\n", splitNMEA[2]);
+	}
+}
+
+
+
 int main(){
 //	bi_decl(bi_program_description("This is a test binary."));
 //	bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
@@ -68,7 +86,7 @@ int main(){
 	double tempSurface=0.0;
 	double turgetDepth=0.0;
 	int i=0;
-	int actualBaudrate[2]={12000,12000};
+//	int actualBaudrate[2]={12000,12000};
 
 	struct sensorsData{
 		uint32_t timeBuff_32=0;
@@ -95,8 +113,9 @@ int main(){
 
 	printf("start");
 	stdio_init_all();
+	multicore_launch_core1(core1_main);
 	pwm.setup();
-	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
+//	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
 //	actualBaudrate[1] = uart.setup(uart1, 9600, 8, 1);
 
 	i2c.setup(i2c0, 400*1000);
@@ -139,8 +158,7 @@ int main(){
   }*/
   printf("Done.\n");
 	
-	printf("UART actual baudrate, 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate
-[1]);
+//	printf("UART actual baudrate, 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
 	printf("HelloLED!\n");
@@ -270,7 +288,7 @@ int main(){
 		MS5837.readTempPress(i2c1, &logData.outTemp, &logData.outPress);
 		BNO055.readAccel(i2c1, &logData.xAccel, &logData.yAccel, &logData.zAccel);
 		BNO055.readMag(i2c1, &logData.xMag, &logData.yMag, &logData.zMag);
-		printf("%d, %f, %f\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
+//		printf("%d, %f, %f\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 
 		// Write something to file
     ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_32, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
@@ -325,7 +343,7 @@ int main(){
 			i=0;
 			gpio_put(LED_PIN, 0);
 //			sleep_ms(1000);
-			printf("PWM RESET\r\n");
+//			printf("PWM RESET\r\n");
 			// Close file
 			fr = f_close(&fil);
 			if (fr != FR_OK) {
@@ -345,7 +363,7 @@ int main(){
 			i++;
 		}
 		logData.timeBuff_32 = time_us_32();
-		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
+//		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 		exeFlag = false;
 	}
 }

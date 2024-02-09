@@ -1816,6 +1816,33 @@ home/raven/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
 .PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
 
+home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.obj: home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+
+.PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.obj
+
+# target to build an object file
+home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+.PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+
+home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.i: home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i
+
+.PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.i
+
+# target to preprocess a source file
+home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i
+.PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i
+
+home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.s: home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s
+
+.PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.s
+
+# target to generate assembly for a file
+home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s
+.PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s
+
 home/raven/pico/pico-sdk/src/rp2_common/pico_platform/platform.obj: home/raven/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
 
 .PHONY : home/raven/pico/pico-sdk/src/rp2_common/pico_platform/platform.obj
@@ -2721,6 +2748,9 @@ help:
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.i"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.s"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.obj"
+	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.obj"
+	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.i"
+	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.s"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_platform/platform.obj"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_platform/platform.i"
 	@echo "... home/raven/pico/pico-sdk/src/rp2_common/pico_platform/platform.s"

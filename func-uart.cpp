@@ -1,29 +1,65 @@
 #include <stdio.h>
+#include <string>
+#include <vector>
 #include "pico/stdlib.h"
 #include "hardware/uart.h"
 #include "hardware/irq.h"
 #include "func-uart.h"
 
+
 const uint UART0_TX_PIN = 0; 
 const uint UART0_RX_PIN = 1;
 const uint UART1_TX_PIN = 4;
 const uint UART1_RX_PIN = 5;
+const std::string targetMessage = "GPGGA";
 
 static int chars_rxed = 0;
+bool messageStartFlag = false;
+bool messageTypeDetectFlag = false;
+bool nmeaUpdateFlag = false;
+int messageBlockCnt = 0;
+std::vector<std::string> splitNMEA(32);
 
-void on_uart0_rx() {
-    while (uart_is_readable(uart0)) {
-        uint8_t ch = uart_getc(uart0);
+void on_uart0_rx(){
+	while (uart_is_readable(uart0)) {
+		uint8_t uart0Buff = uart_getc(uart0);
+		printf("hogehoge");
+		printf("%c", uart0Buff);
+//		if(uart0Buff == 0x24){							//$
+//			printf("MESSAGE START");
+//			printf("%c\n", uart0Buff);
+//			messageStartFlag = true;
+//			continue;
+//		}
+/*		if(messageStartFlag){
+			if(uart0Buff != 0x2c){			//,
+				splitNMEA[messageBlockCnt] += uart0Buff;
+			}
+			else if(uart0Buff == 0x2c){
+				messageBlockCnt++;
+			}
+			else{
+				printf("ERROR!!!!!!!");
+				sleep_ms(100000);
+			}
+			if(messageBlockCnt >= 1){
+				if(splitNMEA[1].compare(0, 5, targetMessage) < 5){
+					continue;
+				}
+			}
+		}*/
+
+		
+
         // Can we send it back?
-        if (uart_is_writable(uart0)) {
+//        if (uart_is_writable(uart0)) {
             // Change it slightly first!
-            ch++;
-            uart_putc(uart0, ch);
-        }
-        chars_rxed++;
+//            ch++;
+ //           uart_putc(uart0, ch);
     }
+ //       chars_rxed++;
 }
-void on_uart1_rx() {
+/*void on_uart1_rx() {
     while (uart_is_readable(uart1)) {
         uint8_t ch = uart_getc(uart1);
         // Can we send it back?
@@ -35,7 +71,7 @@ void on_uart1_rx() {
         chars_rxed++;
     }
 }
-
+*/
 
 
 int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uint stopBit){
@@ -70,7 +106,7 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 		irq_set_exclusive_handler(UART_IRQ, on_uart0_rx);
 	}
 	else if(uartPort == uart1){
-		irq_set_exclusive_handler(UART_IRQ, on_uart1_rx);
+//		irq_set_exclusive_handler(UART_IRQ, on_uart1_rx);
 	}
 	else{
 		printf("CHECK THE UART ID");

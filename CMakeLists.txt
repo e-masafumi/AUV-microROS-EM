@@ -25,4 +25,4 @@ pico_enable_stdio_uart(main 0)
 
 pico_add_extra_outputs(main)
 
-target_link_libraries(main pico_stdlib hardware_pwm hardware_i2c FatFs_SPI hardware_uart)  
+target_link_libraries(main pico_stdlib pico_multicore hardware_pwm hardware_i2c FatFs_SPI hardware_uart)  

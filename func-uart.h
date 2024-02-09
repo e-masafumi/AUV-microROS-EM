@@ -3,9 +3,9 @@
 #include "hardware/uart.h"
 #include "hardware/irq.h"
 
-
 #ifndef FUNC_PICO_UART_H
 #define FUNC_PICO_UART_H
+
 
 class pico_uart{
 	public:
