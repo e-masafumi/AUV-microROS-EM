@@ -35,6 +35,8 @@ pico_uart uart;
 MS5837_02BA MS5837;
 BNO055 BNO055;
 INA228 INA228;
+static semaphore_t sem;
+
 
 bool reserved_addr(uint8_t addr){
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
@@ -54,17 +56,50 @@ bool repeating_timer_callback(struct repeating_timer *t) {
 
 void core1_main(void){
 	int actualBaudrate[2]={12000,12000};
+	char readNMEA[30][30];
+	int messageBlockCnt = 0;
+	bool messageFinishFlag = false;
+	char nmeaBlockCnt=0;
+	char nmeaCharCnt=0;
 	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
 	sleep_ms(3000);
-	printf("UART actual baudrate, 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
+	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 	while(1){
-		if(messageStartFlag){
+		if(uart0DataInFlag){
+			readNMEA[nmeaBlockCnt][nmeaCharCnt] = uart0ReadBuff;
+			uart0DataInFlag = false;
+			nmeaCharCnt++;
+			if(uart0ReadBuff == 0x2c){							//,
+				nmeaBlockCnt++;
+				nmeaCharCnt = 0;
+			}
+			else if(uart0ReadBuff == 0x0a){							//<LF>
+				nmeaBlockCnt = 0;
+				nmeaCharCnt = 0;
+				messageFinishFlag = true;
+			}
+		}
+		sem_acquire_blocking(&sem);
+			if(messageFinishFlag){
+				for(int i=0; i++; i<30){
+					for(int j=0; j++; j<30){
+						printf("%c",readNMEA[i][j]);
+					}
+				}
+				messageFinishFlag = false;
+			}
+//			if(messageFinishFlag){
+//				printf("%s", splitNMEA);
+//				messageFinishFlag = false;
+//			}
+		sem_release(&sem);
+//		if(messageStartFlag){
 //			printf("messageStart from core1");
-		}
-		if(messageFinishFlag){
-			printf("messageFinish from core1");
-			messageFinishFlag = false;
-		}
+//		}
+//		if(messageFinishFlag){
+//			printf("messageFinish from core1");
+//			messageFinishFlag = false;
+//		}
 //		printf("Core 1, UART0 is mine, %dbps", actualBaudrate[0]);
 //		sleep_ms(1000);
 //		printf("%s\n\n\n", splitNMEA[2]);
@@ -117,7 +152,7 @@ int main(){
 //	char filename[] = "log.dat";
 	char filename[] = "log.txt";
 
-
+	sem_init(&sem, 1, 1);
 	printf("start");
 	stdio_init_all();
 	multicore_launch_core1(core1_main);
@@ -370,8 +405,16 @@ int main(){
 		else{
 			i++;
 		}
-		logData.timeBuff_32 = time_us_32();
+//		logData.timeBuff_32 = time_us_32();
+		sem_acquire_blocking(&sem);
 		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
+		
+//		printf("%c", uart0ReadBuff);
+//		if(messageFinishFlag){
+//			printf("messageFinish from core0");
+//			messageFinishFlag = false;
+//		}
+		sem_release(&sem);
 		exeFlag = false;
 	}
 }

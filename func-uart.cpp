@@ -14,18 +14,20 @@ const std::string targetMessage = "GPGGA";
 
 static int chars_rxed = 0;
 bool messageStartFlag = false;
-bool messageFinishFlag = false;
 bool messageTypeDetectFlag = false;
 bool nmeaUpdateFlag = false;
-int messageBlockCnt = 0;
-std::vector<std::string> splitNMEA(32);
+bool uart0DataInFlag = false;
+//std::vector<std::string> splitNMEA(32);
+char readNMEA[15][30];
+char uart0ReadBuff;
 
 void on_uart0_rx(){
-	char uart0Buff;
 	while (uart_is_readable(uart0)) {
-		uart0Buff = uart_getc(uart0);
+		uart0ReadBuff = uart_getc(uart0);
+		uart0DataInFlag = true;
 //		printf("hogehoge");
-		printf("%c", uart0Buff);
+//		printf("%c", uart0ReadBuff);
+/*
 		if(uart0Buff == 0x24 && !messageStartFlag){							//$
 			messageFinishFlag = false;
 			messageStartFlag = true;
@@ -34,10 +36,13 @@ void on_uart0_rx(){
 			messageBlockCnt = 0;
 //			continue;
 		}
+*/
+/*
 		if(uart0Buff == 0x0a){							//<LF>
-			printf("MESSAGE FIN.");
 			messageFinishFlag = true;
+			printf("MESSAGE FIN. %s\n", messageFinishFlag ? "true" : "false");
 		}
+*/
 /*		if(messageStartFlag){
 			if(uart0Buff != 0x2c){			//,
 				splitNMEA[messageBlockCnt] += uart0Buff;

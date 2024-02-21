@@ -416,22 +416,6 @@ pico/stdlib.h
 hardware/pwm.h
 /home/raven/pico/works/AUV-EM/hardware/pwm.h
 
-/home/raven/pico/works/AUV-EM/func-uart.cpp
-stdio.h
--
-string
--
-vector
--
-pico/stdlib.h
-/home/raven/pico/works/AUV-EM/pico/stdlib.h
-hardware/uart.h
-/home/raven/pico/works/AUV-EM/hardware/uart.h
-hardware/irq.h
-/home/raven/pico/works/AUV-EM/hardware/irq.h
-func-uart.h
-/home/raven/pico/works/AUV-EM/func-uart.h
-
 /home/raven/pico/works/AUV-EM/func-uart.h
 stdio.h
 -
