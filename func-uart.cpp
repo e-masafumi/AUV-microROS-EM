@@ -6,7 +6,6 @@
 #include "hardware/irq.h"
 #include "func-uart.h"
 
-
 const uint UART0_TX_PIN = 0; 
 const uint UART0_RX_PIN = 1;
 const uint UART1_TX_PIN = 4;
@@ -15,22 +14,30 @@ const std::string targetMessage = "GPGGA";
 
 static int chars_rxed = 0;
 bool messageStartFlag = false;
+bool messageFinishFlag = false;
 bool messageTypeDetectFlag = false;
 bool nmeaUpdateFlag = false;
 int messageBlockCnt = 0;
 std::vector<std::string> splitNMEA(32);
 
 void on_uart0_rx(){
+	char uart0Buff;
 	while (uart_is_readable(uart0)) {
-		uint8_t uart0Buff = uart_getc(uart0);
-		printf("hogehoge");
+		uart0Buff = uart_getc(uart0);
+//		printf("hogehoge");
 		printf("%c", uart0Buff);
-//		if(uart0Buff == 0x24){							//$
-//			printf("MESSAGE START");
+		if(uart0Buff == 0x24 && !messageStartFlag){							//$
+			messageFinishFlag = false;
+			messageStartFlag = true;
+			printf("MESSAGE START");
 //			printf("%c\n", uart0Buff);
-//			messageStartFlag = true;
+			messageBlockCnt = 0;
 //			continue;
-//		}
+		}
+		if(uart0Buff == 0x0a){							//<LF>
+			printf("MESSAGE FIN.");
+			messageFinishFlag = true;
+		}
 /*		if(messageStartFlag){
 			if(uart0Buff != 0x2c){			//,
 				splitNMEA[messageBlockCnt] += uart0Buff;
@@ -47,8 +54,8 @@ void on_uart0_rx(){
 					continue;
 				}
 			}
-		}*/
-
+		}
+*/
 		
 
         // Can we send it back?
@@ -101,7 +108,7 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 
 	uart_set_fifo_enabled(uartPort, false);
 
-	int UART_IRQ = uart0 == uart0 ? UART0_IRQ : UART1_IRQ;
+	int UART_IRQ = uartPort == uart0 ? UART0_IRQ : UART1_IRQ;
 	if(uartPort == uart0){
 		irq_set_exclusive_handler(UART_IRQ, on_uart0_rx);
 	}

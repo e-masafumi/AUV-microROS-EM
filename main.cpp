@@ -58,9 +58,16 @@ void core1_main(void){
 	sleep_ms(3000);
 	printf("UART actual baudrate, 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 	while(1){
+		if(messageStartFlag){
+//			printf("messageStart from core1");
+		}
+		if(messageFinishFlag){
+			printf("messageFinish from core1");
+			messageFinishFlag = false;
+		}
 //		printf("Core 1, UART0 is mine, %dbps", actualBaudrate[0]);
 //		sleep_ms(1000);
-		printf("%s\n\n\n", splitNMEA[2]);
+//		printf("%s\n\n\n", splitNMEA[2]);
 	}
 }
 
@@ -336,6 +343,7 @@ int main(){
 */
 //		sleep_ms(1000);
 		gpio_put(LED_PIN, 1);
+//		printf("%s\n\n\n", splitNMEA[2]);
 //		puts("Hello World\n");
 		pwm.duty(0, (0.75+i*0.001));
 		pwm.duty(1, (0.75+i*0.001));
@@ -363,7 +371,7 @@ int main(){
 			i++;
 		}
 		logData.timeBuff_32 = time_us_32();
-//		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
+		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 		exeFlag = false;
 	}
 }
