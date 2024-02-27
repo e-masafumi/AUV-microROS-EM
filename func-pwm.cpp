@@ -7,8 +7,6 @@ static int pwmFreq[2] = {5000, 5000};
 static pwm_config pwm_slice_config[2];
 
 int pico_pwm::setup(void){
-
-	
 	int pwmWrap[2] = {sysClk/pwmFreq[0], sysClk/pwmFreq[1]};
 
 	uint pwm_slice_num[2];

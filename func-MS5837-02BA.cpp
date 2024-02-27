@@ -90,7 +90,7 @@ int MS5837_02BA::readTempPress(i2c_inst_t *i2cPort, double *temp, double *press)
 //	printf("%d\n",P);
 
 	if (tempBuff < 2000.0){
-		printf("LOW TEMP\n");
+//		printf("LOW TEMP\n");
 		ti = 11 * dt * dt / pow(2,35);
 		offi = 31 * (tempBuff - 2000) * (tempBuff - 2000) / pow(2,3);
 		sensi = 63 * (tempBuff - 2000) * (tempBuff - 2000) / pow(2,5);

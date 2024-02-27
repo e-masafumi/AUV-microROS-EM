@@ -42,7 +42,7 @@ bool reserved_addr(uint8_t addr){
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
 }
 int64_t alarm_callback(alarm_id_t id, void *user_data) {
-	printf("Timer %d fired!\n", (int) id);
+//	printf("Timer %d fired!\n", (int) id);
 	exeFlag = true;
 	// Can return a value here in us to fire in the future
 	return 0;
@@ -56,43 +56,42 @@ bool repeating_timer_callback(struct repeating_timer *t) {
 
 void core1_main(void){
 	int actualBaudrate[2]={12000,12000};
-	char readNMEA[30][30];
 	int messageBlockCnt = 0;
-	bool messageFinishFlag = false;
-	char nmeaBlockCnt=0;
-	char nmeaCharCnt=0;
+	char nmeaReadBuff=0;
 	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
 	sleep_ms(3000);
 	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 	while(1){
-		if(uart0DataInFlag){
-			readNMEA[nmeaBlockCnt][nmeaCharCnt] = uart0ReadBuff;
-			uart0DataInFlag = false;
+		
+
+/*		if(uart0DataInFlag == true){
+//			sem_acquire_blocking(&sem);
+				nmeaReadBuff = uart0ReadBuff;
+
+			sem_acquire_blocking(&sem);
+				printf("DATA IN");
+			sem_release(&sem);
+				printf("%c", nmeaReadBuff);
+				uart0DataInFlag = false;
+//			sem_release(&sem);
+			readNMEA[nmeaBlockCnt][nmeaCharCnt] = nmeaReadBuff;
 			nmeaCharCnt++;
-			if(uart0ReadBuff == 0x2c){							//,
+			if(nmeaReadBuff == 0x2c){							//,
 				nmeaBlockCnt++;
 				nmeaCharCnt = 0;
 			}
-			else if(uart0ReadBuff == 0x0a){							//<LF>
+			else if(nmeaReadBuff == 0x0a){							//<LF>
 				nmeaBlockCnt = 0;
 				nmeaCharCnt = 0;
 				messageFinishFlag = true;
 			}
-		}
-		sem_acquire_blocking(&sem);
-			if(messageFinishFlag){
-				for(int i=0; i++; i<30){
-					for(int j=0; j++; j<30){
-						printf("%c",readNMEA[i][j]);
-					}
-				}
-				messageFinishFlag = false;
-			}
-//			if(messageFinishFlag){
-//				printf("%s", splitNMEA);
+//			else if(nmeaReadBuff == 0x24){		//$
 //				messageFinishFlag = false;
 //			}
-		sem_release(&sem);
+		}*/
+//			if(messageFinishFlag){
+//				printf("%s", splitNMEA);
+//				messageFinishFlag = false;		}
 //		if(messageStartFlag){
 //			printf("messageStart from core1");
 //		}
@@ -155,7 +154,6 @@ int main(){
 	sem_init(&sem, 1, 1);
 	printf("start");
 	stdio_init_all();
-	multicore_launch_core1(core1_main);
 	pwm.setup();
 //	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
 //	actualBaudrate[1] = uart.setup(uart1, 9600, 8, 1);
@@ -320,7 +318,17 @@ int main(){
 	add_repeating_timer_us(100*1000, repeating_timer_callback, NULL, &st_timer);
 
 
+	multicore_launch_core1(core1_main);
 	while(1) {
+		if(messageFinishFlag == true){
+			for(int i=0; i<30; i++){
+				for(int j=0; j<15; j++){
+					printf("%d, %d, %c\n",i, j, readNMEA[i][j]);
+//						printf("%c",readNMEA[i][j]);
+				}
+			}
+			messageFinishFlag = false;
+		}
 		if(exeFlag == false){
 //			printf("Skipped\n");
 			continue;
@@ -407,7 +415,7 @@ int main(){
 		}
 //		logData.timeBuff_32 = time_us_32();
 		sem_acquire_blocking(&sem);
-		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
+// // // 			printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 		
 //		printf("%c", uart0ReadBuff);
 //		if(messageFinishFlag){

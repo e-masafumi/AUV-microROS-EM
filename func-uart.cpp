@@ -18,15 +18,55 @@ bool messageTypeDetectFlag = false;
 bool nmeaUpdateFlag = false;
 bool uart0DataInFlag = false;
 //std::vector<std::string> splitNMEA(32);
-char readNMEA[15][30];
 char uart0ReadBuff;
+bool messageFinishFlag = false;
+bool nmeaLaunchFlag = false;
+
+char nmeaBlockCnt=0;
+char nmeaCharCnt=0;
+char readNMEA[30][15];
 
 void on_uart0_rx(){
 	while (uart_is_readable(uart0)) {
 		uart0ReadBuff = uart_getc(uart0);
-		uart0DataInFlag = true;
+		if(nmeaLaunchFlag){
+			switch(uart0ReadBuff){
+				case 0x24:		//$	
+					messageFinishFlag = false;
+					nmeaBlockCnt = 0;
+					nmeaCharCnt = 0;
+					break;
+				case 0x2c:			//,
+					nmeaBlockCnt++;
+					nmeaCharCnt = 0;
+					break;
+				case 0x0A:		//LF
+					messageFinishFlag = true;
+					break;
+				default:
+					readNMEA[nmeaBlockCnt][nmeaCharCnt] = uart0ReadBuff;
+					nmeaCharCnt++;
+			}
+		}
+		else{
+			if(uart0ReadBuff == 0x24){
+				nmeaLaunchFlag = true;
+			}
+		}
+		
+//		sem_acquire_blocking(&sem);
+/*			uart0DataInFlag = true;
+//		sem_release(&sem);
 //		printf("hogehoge");
-//		printf("%c", uart0ReadBuff);
+		if(uart0ReadBuff == 0x0A){
+			printf("<LF>");
+		}
+		else if(uart0ReadBuff == 0x0D){
+			printf("<CR>");
+		}
+		else{
+			printf("%c", uart0ReadBuff);
+		}*/
 /*
 		if(uart0Buff == 0x24 && !messageStartFlag){							//$
 			messageFinishFlag = false;
@@ -126,6 +166,34 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	}
 	irq_set_enabled(UART_IRQ, true);
 	uart_set_irq_enables(uartPort, true, false);
+
+
+	for(int i=0; i<30; i++){
+		for(int j=0; j<15; j++){
+			readNMEA[i][j] = 0x23;
+		}
+	}
+	char ultimateGPSset[] = "PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
+	//PMTK314, GLL, RMC, VTG, GGA, GSA, GSV, ~reserved~, NMEA PMTKCHN
+
+	char NMEAchecksum = ultimateGPSset[0];
+	for(int i=1; i<(sizeof(ultimateGPSset)/sizeof(ultimateGPSset[0]))-1; i++){
+		NMEAchecksum ^= ultimateGPSset[i];
+	}
+	char NMEAchecksumAscii[2] = {0, 0};
+	char hexTable[] = "0123456789ABCDEF";
+	NMEAchecksumAscii[0] = hexTable[(char)NMEAchecksum/16];
+	NMEAchecksumAscii[1] = hexTable[(char)NMEAchecksum%16];
+	
+	uart_putc(uartPort, '$');
+	for(int i=0; i<(sizeof(ultimateGPSset)/sizeof(ultimateGPSset[0]))-1; i++){
+		uart_putc(uartPort, ultimateGPSset[i]);
+	}
+	uart_putc(uartPort, '*');
+	uart_putc(uartPort, NMEAchecksumAscii[0]);
+	uart_putc(uartPort, NMEAchecksumAscii[1]);
+	uart_puts(uartPort, "\r\n");
+	sleep_ms(500);	
 
 	return actual;
 }
