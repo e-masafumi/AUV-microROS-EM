@@ -22,6 +22,13 @@
 #include "sd_card.h"
 #include "ff.h"
 
+#define CORE1_HELLO   (99999)
+#define LOG_WRITE_COM   (12345)
+#define EXIT_MSG    (99998)
+#define MAX_LOOP    (10)
+#define DO_COMMAND  (1)
+#define EXIT_LOOP   (2)
+
 const uint LED_PIN = 25;
 const uint I2C0_SDA_PIN = 8;
 const uint I2C0_SCL_PIN = 9;
@@ -36,6 +43,50 @@ MS5837_02BA MS5837;
 BNO055 BNO055;
 INA228 INA228;
 static semaphore_t sem;
+bool nmeaDecodedFlag = false;
+bool logWriteFlag = false;
+
+FRESULT fr;
+FATFS fs;
+FIL fil;
+int ret;
+char buf[100];
+//	char filename[] = "log.dat";
+char filename[] = "log.txt";
+
+
+
+	struct str_sensorsData{
+		uint32_t timeBuff_32=0;
+		double outTemp=0.0;
+		double outPress=0.0;
+		double xAccel=0.0;
+		double yAccel=0.0;
+		double zAccel=0.0;
+		double xMag=0.0;
+		double yMag=0.0;
+		double zMag=0.0;
+	};
+
+	struct str_NMEA{
+		int hours;
+		int minutes;
+		double seconds;
+		double time;
+		double latitude;
+		char nOrS;
+		double longitude;
+		char eOrW;
+		int qual;
+		int sats;
+		double hdop;
+		double altitudeASL;
+		double altitudeGeoid;
+	};
+	
+	struct str_sensorsData logData;
+	struct str_NMEA decodedNMEA;
+
 
 
 bool reserved_addr(uint8_t addr){
@@ -55,13 +106,44 @@ bool repeating_timer_callback(struct repeating_timer *t) {
 }
 
 void core1_main(void){
-	int actualBaudrate[2]={12000,12000};
-	int messageBlockCnt = 0;
-	char nmeaReadBuff=0;
-	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
-	sleep_ms(3000);
-	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
+
+	multicore_fifo_push_blocking(CORE1_HELLO);
 	while(1){
+		uint32_t logWriteCom = multicore_fifo_pop_blocking();
+		if(!(logWriteCom == LOG_WRITE_COM)){
+			continue;
+		}
+		else{
+			logWriteFlag = true;
+		}
+		if(logWriteFlag){
+			// Open file for writing ()
+			fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
+			if (fr != FR_OK) {
+				printf("ERROR: Could not open file (%d)\r\n", fr);
+				while (true);
+			}
+				//Move to end
+			ret = f_lseek(&fil, f_size(&fil));
+			ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_32, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
+			if (ret < 0) {
+				printf("ERROR: Could not write to file (%d)\r\n", ret);
+	     f_close(&fil);
+	     while (true);
+			}
+			// Close file
+			fr = f_close(&fil);
+			if (fr != FR_OK) {
+				printf("ERROR: Could not close file (%d)\r\n", fr);
+				while (true);
+			}
+			logWriteFlag = false;
+		}
+//		if(messageFinishFlag == true){
+//			nmeaDecodedFlag = true;
+//			messageFinishFlag = false;
+//			printf("Decorded\n");
+//		}
 		
 
 /*		if(uart0DataInFlag == true){
@@ -128,28 +210,6 @@ int main(){
 	double turgetDepth=0.0;
 	int i=0;
 //	int actualBaudrate[2]={12000,12000};
-
-	struct sensorsData{
-		uint32_t timeBuff_32=0;
-		double outTemp=0.0;
-		double outPress=0.0;
-		double xAccel=0.0;
-		double yAccel=0.0;
-		double zAccel=0.0;
-		double xMag=0.0;
-		double yMag=0.0;
-		double zMag=0.0;
-	};
-	
-	struct sensorsData logData;
-
-	FRESULT fr;
-	FATFS fs;
-	FIL fil;
-	int ret;
-	char buf[100];
-//	char filename[] = "log.dat";
-	char filename[] = "log.txt";
 
 	sem_init(&sem, 1, 1);
 	printf("start");
@@ -235,7 +295,13 @@ int main(){
 	printf("SurfacePress = %f [mbar]\n", pSurface);
 
 
-
+//GPS
+	int actualBaudrate[2]={12000,12000};
+	int messageBlockCnt = 0;
+	char nmeaReadBuff=0;
+	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
+	sleep_ms(3000);
+	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 
 
   // Initialize SD card
@@ -315,20 +381,57 @@ int main(){
 //    ret = f_write(&fil, "Time, Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
 
 
+	// Close file
+	fr = f_close(&fil);
+	if (fr != FR_OK) {
+		printf("ERROR: Could not close file (%d)\r\n", fr);
+		while (true);
+	}
 	add_repeating_timer_us(100*1000, repeating_timer_callback, NULL, &st_timer);
 
 
 	multicore_launch_core1(core1_main);
+	uint32_t core1HelloMsg = multicore_fifo_pop_blocking();
+	while(!(core1HelloMsg == CORE1_HELLO)){
+	}
+	printf("hello: %d", core1HelloMsg);
 	while(1) {
 		if(messageFinishFlag == true){
 			for(int i=0; i<30; i++){
 				for(int j=0; j<15; j++){
-					printf("%d, %d, %c\n",i, j, readNMEA[i][j]);
-//						printf("%c",readNMEA[i][j]);
+						if(readNMEA[i][j] == 0){
+							printf(",");
+							continue;
+						}
+//					printf("%d, %d, %c\n",i, j, readNMEA[i][j]);
+						printf("%c",readNMEA[i][j]);
 				}
 			}
+			printf("\n");
 			messageFinishFlag = false;
+			if((readNMEA[0][2] == 'G') && (readNMEA[0][3] == 'G') && (readNMEA[0][4] == 'A')){
+				printf("GPGGA detected\n");
+				decodedNMEA.time = atof(readNMEA[1]);
+				decodedNMEA.latitude = atof(readNMEA[2]);
+				decodedNMEA.nOrS = readNMEA[3][1];
+				decodedNMEA.longitude = atof(readNMEA[4]);
+				decodedNMEA.eOrW = readNMEA[5][1];
+				decodedNMEA.qual = atoi(readNMEA[6]);
+				decodedNMEA.sats = atoi(readNMEA[7]);
+				decodedNMEA.hdop = atof(readNMEA[8]);
+				decodedNMEA.altitudeASL = atof(readNMEA[9]);
+				decodedNMEA.altitudeGeoid = atof(readNMEA[11]);
+//				printf("time = %f\n", decodedNMEA.time);
+//				printf("latitude = %c: %f\n", decodedNMEA.nOrS, decodedNMEA.latitude);
+//				printf("longitude = %c: %f\n", decodedNMEA.eOrW, decodedNMEA.longitude);
+//				printf("qual = %d\n", decodedNMEA.qual);
+//				printf("sats = %d\n", decodedNMEA.sats);
+//				printf("hdop = %f\n", decodedNMEA.hdop);
+//				printf("ASL Alt = %f\n", decodedNMEA.altitudeASL);
+//				printf("Geoid Alt = %f\n", decodedNMEA.altitudeGeoid);
+			}
 		}
+
 		if(exeFlag == false){
 //			printf("Skipped\n");
 			continue;
@@ -341,7 +444,7 @@ int main(){
 //		printf("%d, %f, %f\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 
 		// Write something to file
-    ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_32, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
+//    ret = f_printf(&fil, "%d, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_32, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
 //		writeBuff[] = {timeBuff_32, outTemp, outPress, xAccel, yAccel, zAccel, xMag, yMag, zMag};
 //		writeSize=sizeof(writeBuff);
 /*		size_t writeSize=sizeof(logData);
@@ -356,11 +459,6 @@ int main(){
 /*    ret = f_printf(&fil, "%lf, %lf, %lf,", xAccel, yAccel, zAccel);
     ret = f_printf(&fil, "%lf, %lf, %lf", xMag, yMag, zMag);
     ret = f_printf(&fil, "\r\n");*/
-    if (ret < 0) {
-        printf("ERROR: Could not write to file (%d)\r\n", ret);
-        f_close(&fil);
-        while (true);
-    }
 
 /*	
 		printf("+++++OutPut Start+++++\n");
@@ -395,34 +493,21 @@ int main(){
 			gpio_put(LED_PIN, 0);
 //			sleep_ms(1000);
 //			printf("PWM RESET\r\n");
-			// Close file
-			fr = f_close(&fil);
-			if (fr != FR_OK) {
-				printf("ERROR: Could not close file (%d)\r\n", fr);
-        while (true);
-			}
-			// Open file for writing ()
-			fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
-			if (fr != FR_OK) {
-        printf("ERROR: Could not open file (%d)\r\n", fr);
-        while (true);
-			}
-			//Move to end
-			ret = f_lseek(&fil, f_size(&fil));
 		}
 		else{
 			i++;
 		}
-//		logData.timeBuff_32 = time_us_32();
-		sem_acquire_blocking(&sem);
-// // // 			printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
+		logData.timeBuff_32 = time_us_32();
+//		sem_acquire_blocking(&sem);
+ 		printf("%d, %f, %f\n\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 		
 //		printf("%c", uart0ReadBuff);
 //		if(messageFinishFlag){
 //			printf("messageFinish from core0");
 //			messageFinishFlag = false;
 //		}
-		sem_release(&sem);
+//		sem_release(&sem);
+		multicore_fifo_push_blocking(LOG_WRITE_COM);
 		exeFlag = false;
 	}
 }

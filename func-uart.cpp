@@ -170,7 +170,8 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 
 	for(int i=0; i<30; i++){
 		for(int j=0; j<15; j++){
-			readNMEA[i][j] = 0x23;
+	//		readNMEA[i][j] = 0x23;
+			readNMEA[i][j] = 0;
 		}
 	}
 	char ultimateGPSset[] = "PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
@@ -187,11 +188,11 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	
 	uart_putc(uartPort, '$');
 	for(int i=0; i<(sizeof(ultimateGPSset)/sizeof(ultimateGPSset[0]))-1; i++){
-		uart_putc(uartPort, ultimateGPSset[i]);
+		uart_putc_raw(uartPort, ultimateGPSset[i]);
 	}
-	uart_putc(uartPort, '*');
-	uart_putc(uartPort, NMEAchecksumAscii[0]);
-	uart_putc(uartPort, NMEAchecksumAscii[1]);
+	uart_putc_raw(uartPort, '*');
+	uart_putc_raw(uartPort, NMEAchecksumAscii[0]);
+	uart_putc_raw(uartPort, NMEAchecksumAscii[1]);
 	uart_puts(uartPort, "\r\n");
 	sleep_ms(500);	
 
