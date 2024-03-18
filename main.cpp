@@ -9,8 +9,10 @@
 #include "hardware/gpio.h"
 #include "hardware/uart.h"
 #include "hardware/pwm.h"
+#include "hardware/clocks.h"
 #include "pico/binary_info.h"
 #include "extern.h"
+#include "struct.h"
 
 #include "func-pwm.h"
 #include "func-i2c.h"
@@ -29,11 +31,13 @@
 #define DO_COMMAND  (1)
 #define EXIT_LOOP   (2)
 
-const uint LED_PIN = 25;
+
 const uint I2C0_SDA_PIN = 8;
 const uint I2C0_SCL_PIN = 9;
 const uint I2C1_SDA_PIN = 14;
 const uint I2C1_SCL_PIN = 15;
+
+const uint LED_PIN = 25;
 volatile bool exeFlag = false;
 struct repeating_timer st_timer;
 pico_pwm pwm;
@@ -56,37 +60,8 @@ char buf[100];
 char filename[] = "log.txt";
 
 
-	struct str_sensorsData{
-		uint64_t timeBuff_64=0;
-		double outTemp=0.0;
-		double outPress=0.0;
-		double xAccel=0.0;
-		double yAccel=0.0;
-		double zAccel=0.0;
-		double xMag=0.0;
-		double yMag=0.0;
-		double zMag=0.0;
-	};
-
-	struct str_NMEA{
-		int hours;
-		int minutes;
-		double seconds;
-		double time;
-		double latitude;
-		char nOrS;
-		double longitude;
-		char eOrW;
-		int qual;
-		int sats;
-		double hdop;
-		double altitudeASL;
-		double altitudeGeoid;
-	};
-	
-	struct str_sensorsData logData;
-	struct str_NMEA decodedNMEA;
-
+struct str_sensorsData logData;
+struct str_NMEA decodedNMEA;
 
 
 bool reserved_addr(uint8_t addr){
@@ -182,7 +157,7 @@ void core1_main(void){
 //    ret = f_write(&fil, "Time, Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
 
 
-	ret = f_printf(&fil, "Internal Time,Outer Temperature,Outer Pressure,Accel X,Accel Y,Accel Z,Mag X,Mag Y,Mag Z,GPS Time,NorS,Latitude,EorW,Longitude,Qual,Sats,Hdop,Altitude ASL,Altitude Geoid\r\n");
+	ret = f_printf(&fil, "Internal Time,Outer Temperature,Outer Pressure,Accel X,Accel Y,Accel Z,Mag X,Mag Y,Mag Z,GPS Time,Time_seconds,NorS,Latitude,EorW,Longitude,Qual,Sats,Hdop,Altitude ASL,Altitude Geoid\r\n");
 
 	// Close file
 	fr = f_close(&fil);
@@ -214,8 +189,8 @@ void core1_main(void){
 			}
 				//Move to end
 			ret = f_lseek(&fil, f_size(&fil));
-			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
-			printf("%d,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", (uint32_t)logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
+			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.seconds, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
+//			printf("%d,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", (uint32_t)logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
 //			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
 			if (ret < 0) {
 				printf("ERROR: Could not write to file (%d)\r\n", ret);
@@ -390,14 +365,20 @@ int main(){
 	int actualBaudrate[2]={12000,12000};
 	int messageBlockCnt = 0;
 	char nmeaReadBuff=0;
+	double nmeaBuff=0.0;
 	actualBaudrate[0] = uart.setup(uart0, 9600, 8, 1);
 	sleep_ms(3000);
 	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 
 
-	add_repeating_timer_us(100*1000, repeating_timer_callback, NULL, &st_timer);
+	add_repeating_timer_us(200*1000, repeating_timer_callback, NULL, &st_timer);
 
 
+	uint32_t f_pll_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_PLL_SYS_CLKSRC_PRIMARY);
+	printf("\n-----\n");
+  printf("pll_sys = %dkHz\n", f_pll_sys);
+	printf("\n-----\n");
+	
 	multicore_launch_core1(core1_main);
 	uint32_t core1HelloMsg = multicore_fifo_pop_blocking();
 	while(!(core1HelloMsg == CORE1_HELLO)){
@@ -405,24 +386,30 @@ int main(){
 	printf("hello: %d\n", core1HelloMsg);
 	while(1) {
 		if(messageFinishFlag == true){
-			for(int i=0; i<30; i++){
+/*			for(int i=0; i<30; i++){
 				for(int j=0; j<15; j++){
 						if(readNMEA[i][j] == 0){
-							printf(",");
+//							printf(",");
 							continue;
 						}
 //					printf("%d, %d, %c\n",i, j, readNMEA[i][j]);
-						printf("%c",readNMEA[i][j]);
+//						printf("%c",readNMEA[i][j]);
 				}
-			}
-			printf("\n");
+			}*/
+//			printf("\n");
 			messageFinishFlag = false;
 			if((readNMEA[0][2] == 'G') && (readNMEA[0][3] == 'G') && (readNMEA[0][4] == 'A')){
-				printf("GPGGA detected\n");
+//				printf("GPGGA detected\n");
 				decodedNMEA.time = atof(readNMEA[1]);
+				
 				decodedNMEA.latitude = atof(readNMEA[2]);
+				nmeaBuff = decodedNMEA.latitude/100;
+				decodedNMEA.latitude = (int)nmeaBuff + (nmeaBuff-(int)nmeaBuff)/60;
 				decodedNMEA.nOrS = readNMEA[3][0];
+				
 				decodedNMEA.longitude = atof(readNMEA[4]);
+				nmeaBuff = decodedNMEA.longitude/100;
+				decodedNMEA.latitude = (int)nmeaBuff + (nmeaBuff-(int)nmeaBuff)/60;
 				decodedNMEA.eOrW = readNMEA[5][0];
 				decodedNMEA.qual = atoi(readNMEA[6]);
 				decodedNMEA.sats = atoi(readNMEA[7]);
@@ -438,6 +425,10 @@ int main(){
 //				printf("ASL Alt = %f\n", decodedNMEA.altitudeASL);
 //				printf("Geoid Alt = %f\n", decodedNMEA.altitudeGeoid);
 			}
+		}
+
+		if(decodedNMEA.qual <= 1){
+//			continue;
 		}
 
 		if(exeFlag == false){
@@ -505,9 +496,10 @@ int main(){
 		else{
 			i++;
 		}
-		logData.timeBuff_64 = time_us_64();
+//		logData.timeBuff_64 = time_us_64();
 //		sem_acquire_blocking(&sem);
 // 		printf("Outlog: %lu, %lf, %lf\n\n",logData.timeBuff_64, logData.outTemp, logData.outPress);
+		printf("GPS Time: %lf", decodedNMEA.time);
 		
 //		printf("%c", uart0ReadBuff);
 //		if(messageFinishFlag){

@@ -4,7 +4,6 @@
 #include "func-i2c.h"
 
 
-
 int pico_i2c::setup(i2c_inst_t *i2cPort, uint i2cBaudrate){
 	int check=0;
 

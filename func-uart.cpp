@@ -171,7 +171,7 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	for(int i=0; i<30; i++){
 		for(int j=0; j<15; j++){
 	//		readNMEA[i][j] = 0x23;
-			readNMEA[i][j] = 0;
+//			readNMEA[i][j] = 0;
 		}
 	}
 	char ultimateGPSset[] = "PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
@@ -187,15 +187,47 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	NMEAchecksumAscii[1] = hexTable[(char)NMEAchecksum%16];
 	
 	uart_putc(uartPort, '$');
+	printf("$");
 	for(int i=0; i<(sizeof(ultimateGPSset)/sizeof(ultimateGPSset[0]))-1; i++){
 		uart_putc_raw(uartPort, ultimateGPSset[i]);
+		printf("%c", ultimateGPSset[i]);
 	}
 	uart_putc_raw(uartPort, '*');
+	printf("*");
 	uart_putc_raw(uartPort, NMEAchecksumAscii[0]);
+	printf("%c", NMEAchecksumAscii[0]);
 	uart_putc_raw(uartPort, NMEAchecksumAscii[1]);
+	printf("%c", NMEAchecksumAscii[1]);
 	uart_puts(uartPort, "\r\n");
+	printf("\r\n");
 	sleep_ms(500);	
+
+
+	char ultimateGPSset1[] = "PMTK220,200";
+	//PMTK220, milliseconds
+	NMEAchecksum = ultimateGPSset1[0];
+	for(int i=1; i<(sizeof(ultimateGPSset1)/sizeof(ultimateGPSset1[0]))-1; i++){
+		NMEAchecksum ^= ultimateGPSset1[i];
+	}
+	NMEAchecksumAscii[0] = hexTable[(char)NMEAchecksum/16];
+	NMEAchecksumAscii[1] = hexTable[(char)NMEAchecksum%16];
+	
+	uart_putc(uartPort, '$');
+	printf("$");
+	for(int i=0; i<(sizeof(ultimateGPSset1)/sizeof(ultimateGPSset1[0]))-1; i++){
+		uart_putc_raw(uartPort, ultimateGPSset1[i]);
+		printf("%c", ultimateGPSset1[i]);
+	}
+	uart_putc_raw(uartPort, '*');
+	printf("*");
+	uart_putc_raw(uartPort, NMEAchecksumAscii[0]);
+	printf("%c", NMEAchecksumAscii[0]);
+	uart_putc_raw(uartPort, NMEAchecksumAscii[1]);
+	printf("%c", NMEAchecksumAscii[1]);
+	uart_puts(uartPort, "\r\n");
+	printf("\r\n");
+	sleep_ms(500);	
+
 
 	return actual;
 }
-

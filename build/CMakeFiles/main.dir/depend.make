@@ -2874,6 +2874,7 @@ CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_sync
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/common/pico_time/include/pico/time.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/platform_defs.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/addressmap.h
+CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/clocks.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dma.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dreq.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/i2c.h
@@ -2886,6 +2887,7 @@ CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/spi.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/timer.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h
+CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/clocks.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/dma.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/i2c.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/interp.h
@@ -2898,6 +2900,7 @@ CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_base/include/hardware/address_mapped.h
+CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_clocks/include/hardware/clocks.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/include/hardware/dma.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio.h
 CMakeFiles/main.dir/main.cpp.obj: /home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h
@@ -2919,6 +2922,7 @@ CMakeFiles/main.dir/main.cpp.obj: ../func-i2c.h
 CMakeFiles/main.dir/main.cpp.obj: ../func-pwm.h
 CMakeFiles/main.dir/main.cpp.obj: ../func-uart.h
 CMakeFiles/main.dir/main.cpp.obj: ../main.cpp
+CMakeFiles/main.dir/main.cpp.obj: ../struct.h
 CMakeFiles/main.dir/main.cpp.obj: generated/pico_base/pico/config_autogen.h
 CMakeFiles/main.dir/main.cpp.obj: generated/pico_base/pico/version.h
 
