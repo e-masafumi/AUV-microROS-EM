@@ -328,7 +328,9 @@ int main(){
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
 	printf("HelloLED!\n");
+	gpio_put(LED_PIN, 1);
 	sleep_ms(500);
+	gpio_put(LED_PIN, 0);
 //	i2c.read(i2c1, 0x28, 0x00, &data, 1);
 //	printf("0x%x\n", data);
 
@@ -384,6 +386,24 @@ int main(){
 	while(!(core1HelloMsg == CORE1_HELLO)){
 	}
 	printf("hello: %d\n", core1HelloMsg);
+
+	gpio_put(LED_PIN, 1);
+	for(int i=0; i<4; i++){
+		for(int j=0; j<100; j++){
+			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
+			sleep_ms(10);
+		}
+		for(int j=100; j>-100; j--){
+			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
+			sleep_ms(10);
+		}
+		for(int j=-100; j<0; j++){
+			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
+			sleep_ms(10);
+		}
+	}
+
+
 	while(1) {
 		if(messageFinishFlag == true){
 /*			for(int i=0; i<30; i++){
@@ -482,20 +502,19 @@ int main(){
 		printf("|G| = %f \n\n", sqrt(pow(xAccel,2)+pow(yAccel,2)+pow(zAccel,2)));
 */
 //		sleep_ms(1000);
-		gpio_put(LED_PIN, 1);
 //		printf("%s\n\n\n", splitNMEA[2]);
 //		puts("Hello World\n");
-		pwm.duty(0, (0.75+i*0.001));
-		pwm.duty(1, (0.75+i*0.001));
-		if(i >= 10){
-			i=0;
-			gpio_put(LED_PIN, 0);
+//		pwm.duty(0, (0.75+i*0.001));
+//		pwm.duty(1, (0.75+i*0.001));
+//		if(i >= 10){
+//			i=0;
+//			gpio_put(LED_PIN, 0);
 //			sleep_ms(1000);
 //			printf("PWM RESET\r\n");
-		}
-		else{
-			i++;
-		}
+//		}
+//		else{
+//			i++;
+//		}
 //		logData.timeBuff_64 = time_us_64();
 //		sem_acquire_blocking(&sem);
 // 		printf("Outlog: %lu, %lf, %lf\n\n",logData.timeBuff_64, logData.outTemp, logData.outPress);

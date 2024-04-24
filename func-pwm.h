@@ -9,7 +9,8 @@ class pico_pwm{
 	public:
 		
 		int setup(void);
-		int duty(int channel, double duty);
+		int duty(int pinNum, double duty);
+		double dutyFit(double input, double minDuty, double maxDuty);
 };
 
 #endif
