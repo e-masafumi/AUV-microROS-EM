@@ -189,7 +189,7 @@ void core1_main(void){
 			}
 				//Move to end
 			ret = f_lseek(&fil, f_size(&fil));
-			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.seconds, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
+			ret = f_printf(&fil, "%lu,%lf, %lf, %lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", logData.timeBuff_64, logData.mainVol, logData.mainCur,logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.seconds, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
 //			printf("%d,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf, %lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf\r\n", (uint32_t)logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag, decodedNMEA.time, decodedNMEA.nOrS, decodedNMEA.latitude, decodedNMEA.eOrW, decodedNMEA.longitude, decodedNMEA.qual, decodedNMEA.sats, decodedNMEA.hdop, decodedNMEA.altitudeASL, decodedNMEA.altitudeGeoid);
 //			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\r\n", logData.timeBuff_64, logData.outTemp, logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag);
 			if (ret < 0) {
@@ -460,6 +460,7 @@ int main(){
 		MS5837.readTempPress(i2c1, &logData.outTemp, &logData.outPress);
 		BNO055.readAccel(i2c1, &logData.xAccel, &logData.yAccel, &logData.zAccel);
 		BNO055.readMag(i2c1, &logData.xMag, &logData.yMag, &logData.zMag);
+		INA228.readCurVolPow(i2c0, &logData.mainCur, &logData.mainVol, &logData.mainPow);
 //		printf("%d, %f, %f\n",logData.timeBuff_32, logData.outTemp, logData.outPress);
 
 		// Write something to file
@@ -518,7 +519,10 @@ int main(){
 //		logData.timeBuff_64 = time_us_64();
 //		sem_acquire_blocking(&sem);
 // 		printf("Outlog: %lu, %lf, %lf\n\n",logData.timeBuff_64, logData.outTemp, logData.outPress);
-		printf("GPS Time: %lf", decodedNMEA.time);
+		printf("GPS Time: %lf \n", decodedNMEA.time);
+		printf("Main Voltage: %lf [mV] \n", logData.mainVol);
+		printf("Main Current: %lf [mA] \n", logData.mainCur);
+		printf("\n");
 		
 //		printf("%c", uart0ReadBuff);
 //		if(messageFinishFlag){

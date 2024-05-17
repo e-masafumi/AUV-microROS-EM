@@ -3,6 +3,9 @@
 
 struct str_sensorsData{
 	uint64_t timeBuff_64=0;
+	double mainVol=0.0;
+	double mainCur=0.0;
+	double mainPow=0.0;
 	double outTemp=0.0;
 	double outPress=0.0;
 	double xAccel=0.0;
