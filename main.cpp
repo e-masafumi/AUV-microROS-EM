@@ -49,6 +49,7 @@ INA228 INA228;
 static semaphore_t sem;
 bool nmeaDecodedFlag = false;
 bool logWriteFlag = false;
+bool onBoardLED = true;
 
 
 FRESULT fr;
@@ -157,7 +158,7 @@ void core1_main(void){
 //    ret = f_write(&fil, "Time, Temp, Press, ax, ay, az, Bx, By, Bz\r\n");
 
 
-	ret = f_printf(&fil, "Internal Time,Outer Temperature,Outer Pressure,Accel X,Accel Y,Accel Z,Mag X,Mag Y,Mag Z,GPS Time,Time_seconds,NorS,Latitude,EorW,Longitude,Qual,Sats,Hdop,Altitude ASL,Altitude Geoid\r\n");
+	ret = f_printf(&fil, "Internal Time,Voltage, Current, Outer Temperature,Outer Pressure,Accel X,Accel Y,Accel Z,Mag X,Mag Y,Mag Z,GPS Time,Time_seconds,NorS,Latitude,EorW,Longitude,Qual,Sats,Hdop,Altitude ASL,Altitude Geoid\r\n");
 
 	// Close file
 	fr = f_close(&fil);
@@ -173,6 +174,7 @@ void core1_main(void){
 	printf("SPI Baudrate = %d\n\n", spi_get_baudrate(spi0));
 	
 	while(1){
+		
 		uint32_t logWriteCom = multicore_fifo_pop_blocking();
 		if(!(logWriteCom == LOG_WRITE_COM)){
 			continue;
@@ -328,9 +330,8 @@ int main(){
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
 	printf("HelloLED!\n");
-	gpio_put(LED_PIN, 1);
+	gpio_put(LED_PIN, onBoardLED);
 	sleep_ms(500);
-	gpio_put(LED_PIN, 0);
 //	i2c.read(i2c1, 0x28, 0x00, &data, 1);
 //	printf("0x%x\n", data);
 
@@ -387,7 +388,6 @@ int main(){
 	}
 	printf("hello: %d\n", core1HelloMsg);
 
-	gpio_put(LED_PIN, 1);
 	for(int i=0; i<4; i++){
 		for(int j=0; j<100; j++){
 			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
@@ -418,6 +418,8 @@ int main(){
 			}*/
 //			printf("\n");
 			messageFinishFlag = false;
+			onBoardLED = !onBoardLED;
+			gpio_put(LED_PIN, onBoardLED);
 			if((readNMEA[0][2] == 'G') && (readNMEA[0][3] == 'G') && (readNMEA[0][4] == 'A')){
 //				printf("GPGGA detected\n");
 				decodedNMEA.time = atof(readNMEA[1]);
@@ -520,8 +522,8 @@ int main(){
 //		sem_acquire_blocking(&sem);
 // 		printf("Outlog: %lu, %lf, %lf\n\n",logData.timeBuff_64, logData.outTemp, logData.outPress);
 		printf("GPS Time: %lf \n", decodedNMEA.time);
-		printf("Main Voltage: %lf [mV] \n", logData.mainVol);
-		printf("Main Current: %lf [mA] \n", logData.mainCur);
+		printf("Main Voltage: %lf [V] \n", logData.mainVol/1e6);
+		printf("Main Current: %lf [A] \n", logData.mainCur/1e6);
 		printf("\n");
 		
 //		printf("%c", uart0ReadBuff);

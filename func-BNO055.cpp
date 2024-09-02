@@ -82,8 +82,8 @@ int BNO055::setup(i2c_inst_t *i2cPort){
 
 	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, &readBuff, 1);
 	printf("BNO055_UNIT_SEL_ADDR = 0x%b BEFORE INIT\n", readBuff);
-	i2c_BNO055.writeOneByte(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, 0b10000000);
-	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, &readBuff, 1);
+	i2c_BNO055.writeOneByte(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, 0b10000000);	//[m/s^2], [degree/s], degrees,Celsius, Android Format
+	i2c_BNO055.read(i2cPort, BNO055_ADDRESS_A, BNO055_UNIT_SEL_ADDR, &readBuff, 1);ZZ
 	printf("BNO055_UNIT_SEL_ADDR INIT_FIN = 0x%b AFTER INIT\n", readBuff);
 
 	return 0;
