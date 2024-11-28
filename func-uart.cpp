@@ -229,5 +229,32 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	sleep_ms(500);	
 
 
+	char ultimateGPSset2[] = "PMTK251,38400";
+	//PMTK251, baudrate
+	NMEAchecksum = ultimateGPSset2[0];
+	for(int i=1; i<(sizeof(ultimateGPSset2)/sizeof(ultimateGPSset2[0]))-1; i++){
+		NMEAchecksum ^= ultimateGPSset2[i];
+	}
+	NMEAchecksumAscii[0] = hexTable[(char)NMEAchecksum/16];
+	NMEAchecksumAscii[1] = hexTable[(char)NMEAchecksum%16];
+	
+	uart_putc(uartPort, '$');
+	printf("$");
+	for(int i=0; i<(sizeof(ultimateGPSset2)/sizeof(ultimateGPSset2[0]))-1; i++){
+		uart_putc_raw(uartPort, ultimateGPSset2[i]);
+		printf("%c", ultimateGPSset2[i]);
+	}
+	uart_putc_raw(uartPort, '*');
+	printf("*");
+	uart_putc_raw(uartPort, NMEAchecksumAscii[0]);
+	printf("%c", NMEAchecksumAscii[0]);
+	uart_putc_raw(uartPort, NMEAchecksumAscii[1]);
+	printf("%c", NMEAchecksumAscii[1]);
+	uart_puts(uartPort, "\r\n");
+	printf("\r\n");
+	sleep_ms(500);	
+
+	actual = uart_set_baudrate(uartPort, 38400);
+
 	return actual;
 }

@@ -2,6 +2,7 @@
 //#include <math.h>
 
 #include <bits/stdc++.h>
+#include <stdint.h>
 #include <string>
 #include <vector>
 #include "pico/stdlib.h"
@@ -31,6 +32,7 @@
 #define DO_COMMAND  (1)
 #define EXIT_LOOP   (2)
 
+#define TARGET_DEPTH_M (1.00)
 
 const uint I2C0_SDA_PIN = 8;
 const uint I2C0_SCL_PIN = 9;
@@ -389,18 +391,19 @@ int main(){
 	printf("hello: %d\n", core1HelloMsg);
 
 	for(int i=0; i<4; i++){
-		for(int j=0; j<100; j++){
-			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
-			sleep_ms(10);
+		for(int j=0; j<20; j++){
+			pwm.duty(i, pwm.dutyFit(0.5+j*0.01, 0.55, 0.95));
+			printf("Motor: %d,  ", i);
+			printf("Duty: %lf\n", 0.5+j*0.01);
+			sleep_ms(50);
 		}
-		for(int j=100; j>-100; j--){
-			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
-			sleep_ms(10);
+		for(int j=20; j>-1; j--){
+			pwm.duty(i, pwm.dutyFit(0.5+j*0.01, 0.55, 0.95));
+			printf("Motor: %d,  ", i);
+			printf("Duty: %lf\n", 0.5+j*0.01);
+			sleep_ms(50);
 		}
-		for(int j=-100; j<0; j++){
-			pwm.duty(i, pwm.dutyFit(0.75+j*0.001, 0.55, 0.95));
-			sleep_ms(10);
-		}
+		sleep_ms(500);
 	}
 
 
@@ -524,6 +527,8 @@ int main(){
 		printf("GPS Time: %lf \n", decodedNMEA.time);
 		printf("Main Voltage: %lf [V] \n", logData.mainVol/1e6);
 		printf("Main Current: %lf [A] \n", logData.mainCur/1e6);
+		printf("Outer Pressure: %lf [hPa] \n", logData.outPress);
+		printf("Outer Temp: %lf [Deg.C.] \n", logData.outTemp);
 		printf("\n");
 		
 //		printf("%c", uart0ReadBuff);
